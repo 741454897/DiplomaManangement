@@ -214,7 +214,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <tr>
                                             <td class="col-md-3" style="text-align: right"><label for="major">专　　业：</label></td>
                                             <td class="col-md-3">
-                                                <span class="msg"></span>
+                                                <span class="major"></span>
                                             </td>
                                             <td class="col-md-3" style="text-align: right"><label for="level">层　　次：</label></td>
                                             <td class="col-md-3">
@@ -369,8 +369,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         if(mess){
             let data = eval('(' + mess + ')');
             // data = JSON.parse(data);
-            // console.log(data);
-            // console.log(data.num);
+            console.log(data);
+            console.log(data.major);
             $('.num').text(data.num);
             $('.txtype').text(data.txtype);
             $('.school').text(data.school);

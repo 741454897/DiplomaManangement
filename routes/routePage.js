@@ -18,6 +18,8 @@ module.exports = function (app) {
     app.route('/total')
         .get(renderPage.renderTotal);
 
+    app.route('/total2')
+        .get(renderPage.renderTotal2);
 
     app.route('/revoke')
         .get(renderPage.renderRevoke);

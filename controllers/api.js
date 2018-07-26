@@ -403,6 +403,8 @@ exports.remove = function (req, res, next) {
 exports.getCert = function (req, res, next) {
     let num = req.body.num;
     let Txtype = req.body.txtype;
+    let cmd = 'fc.' + req.body.cmd;
+    console.log(cmd);
     // console.log('num=', num);
     // console.log('txtype=', Txtype);
     (async () => {
@@ -412,6 +414,17 @@ exports.getCert = function (req, res, next) {
                 fc = await FConn.FConnect('admin');
                 fc_list['admin'] = fc;
             }
+
+            if(cmd){
+                var ret = await eval(cmd);
+                if (ret !== undefined) {
+                    res.write(ret);
+                    console.log(ret);
+                }
+                res.end();
+
+            }else{
+
             var key = Txtype + num;
             console.log(key);
             let re = await fc.query("get", key);
@@ -461,6 +474,8 @@ exports.getCert = function (req, res, next) {
                 messages: re,
                 pic_src: pic_src
             });
+            //else
+        }
         } catch (err) {
             console.log("Fabric连接出错或执行出错", err);
         }

@@ -44,6 +44,15 @@ exports.renderTotal = function (req, res, next) {
     });
 };
 
+exports.renderTotal2 = function (req, res, next) {
+    res.render('total2', {
+        title: 'Total2',
+        username: req.session.username,
+        college: req.session.college,
+        role: req.session.role
+    });
+};
+
 
 //撤销证书
 exports.renderRevoke = function (req, res, next) {

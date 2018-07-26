@@ -44,6 +44,8 @@ module.exports = function (app) {
     app.route('/information')
         .get(renderPage.renderInformation);
 
- 
+
+    app.route('/demo')
+        .get(renderPage.renderDemo);
 
 };

@@ -123,21 +123,53 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">目 录</li>
                     <!-- Optionally, you can add icons to the links -->
-                    <li><a href="/conductor"><i class="fa fa-link"></i><span>主界面</span></a></li>
+                    <li>
+                        <a href="/conductor">
+                            <i class="fa fa-link"></i>
+                            <span>主界面</span>
+                        </a>
+                    </li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-link"></i><span>单个操作</span>
-                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                            <i class="fa fa-link"></i>
+                            <span>单个操作</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/history">查询历史</a></li>
-                            <li><a href="/onemodify">单个修改</a></li>
+                            <li>
+                                <a href="/">单个录入</a>
+                            </li>
+                            <li>
+                                <a href="/onemodify">单个修改</a>
+                            </li>
                         </ul>
                     </li>
-                    <li><a href="/excel"><i class="fa fa-link"></i><span>批量录入</span></a></li>
-                    <li><a href="/count"><i class="fa fa-link"></i><span>模糊查询</span></a></li>
-                    <li><a href="/revoke"><i class="fa fa-link"></i><span>撤销</span></a></li>
-                    <li class="active"><a href="/sample"><i class="fa fa-link"></i><span>样本</span></a></li>
+                    <li>
+                        <a href="/excel">
+                            <i class="fa fa-link"></i>
+                            <span>批量录入</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/count">
+                            <i class="fa fa-link"></i>
+                            <span>模糊查询</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/revoke">
+                            <i class="fa fa-link"></i>
+                            <span>撤销</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/sample">
+                            <i class="fa fa-link"></i>
+                            <span>样本</span>
+                        </a>
+                    </li>
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
@@ -178,8 +210,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
                                 <div class="col-xs-4" style="float: right">
                                     <select id="Txtype" name="Txtype" class="btn btn-block btn-default">
-                                        <option value="XWZ">学士学位证书</option>
-                                        <option value="BYZ" selected="selected">毕业证书</option>
+                                        <option value="XWZ">学位证书</option>
+                                        <option value="BYZ" selected="selected">学历证书</option>
                                     </select>
                                 </div>
                             </div>
@@ -238,6 +270,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="dist/js/demo.js"></script>
     <script src="dist/js/xlsx.core.min.js"></script>
     <script>
+        let username = "<%=username%>";
+        let college = "<%=college%>";
+        let role = "<%=role%>";
         var cmd;
         var base64;
         // console.log(diplimaImage);
@@ -272,56 +307,65 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     '<td id="status"><span>等待上传</span></td>' +
                     '<td><input type="date" id="date" style="disabled:"false"" bgcolor="#f4f4f4"></input></td></tr>'
                 $('#FileList').append(html);
-        });
-        $('#upload').click(function () {
-            // var date = $('#date').val();
-            
-            var txtype = "";
-            // console.log(key);
-            if ($('#Txtype').val() == 'BYZ') {
-                txtype = "毕业证书";
-            }
-            else {
-                txtype = "学士学位证书";
-            }
-
-            var date = $('#date').val();
-            var key = $('#Txtype').val() + date;
-            var regex = new RegExp(/^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$/);
-            if (!regex.test(date)) {
-                flag = false;
-                console.log(date);
-                // $('#upload').attr("disabled", true);
-                $('#status').html('<span style="color: red;">日期格式错误</span>');
-                return;
-            }
-
-            var diplimaImage = {
-                date: date,
-                txtype: txtype
-            };
-            cmd = 'putBase64("' + key + '","' + base64 + '",\'' + JSON.stringify(diplimaImage) + '\')';
-            console.log(key + date);
-            console.log(cmd);
-            $.ajax({
-                url: '/api',
-                type: 'post',  //不适合get，应采用post，invoke调用应避免缓存
-                data: {
-                    cmd: cmd
-                },
-                success: function (data) {
-                    alert(data);
-                    $('#status').html('<span style="color: #5FB878;">上传成功</span>');
-                    $('#date').attr("disabled", true);
-                    // window.location = 'total'; //重定向到tatal.html
-                },
-                error: function (e) {
-                    alert('server error!');
-                    console.log(e);
+            });
+            $('#upload').click(function () {
+                // var date = $('#date').val();
+                var txtype = "";
+                // console.log(key);
+                if ($('#Txtype').val() == 'BYZ') {
+                    txtype = "毕业证书";
+                }else if(role=="本科"){
+                    txtype = "学士学位证书";
+                }else if(role=="硕士"){
+                    txtype = "硕士学位证书";                
+                }else if(role=="博士"){ 
+                    txtype = "博士学位证书";                
+                }else{
+                    alert('您没有权限增加证书样本！');
+                    return;
                 }
+                var date = $('#date').val();
+                var key = $('#Txtype').val() + date + colloge + role;
+                var regex = new RegExp(
+                    /^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$/
+                );
+                if (!regex.test(date)) {
+                    flag = false;
+                    console.log(date);
+                    // $('#upload').attr("disabled", true);
+                    $('#status').html('<span style="color: red;">日期格式错误</span>');
+                    return;
+                }
+
+                var diplimaImage = {
+                    date: date,
+                    txtype: txtype,
+                    college: college,
+                    role: role
+                };
+                cmd = 'putBase64("' + key + '","' + base64 + '",\'' + JSON.stringify(diplimaImage) +
+                    '\')';
+                console.log(key + date);
+                console.log(cmd);
+                $.ajax({
+                    url: '/api',
+                    type: 'post', //不适合get，应采用post，invoke调用应避免缓存
+                    data: {
+                        cmd: cmd
+                    },
+                    success: function (data) {
+                        alert(data);
+                        $('#status').html('<span style="color: #5FB878;">上传成功</span>');
+                        $('#date').attr("disabled", true);
+                        // window.location = 'total'; //重定向到tatal.html
+                    },
+                    error: function (e) {
+                        alert('server error!');
+                        console.log(e);
+                    }
+                });
             });
         });
-    });
     </script>
 </body>
 

@@ -46,7 +46,6 @@
                     <b>学位证书认证系统</b>
                 </span>
             </a>
-
             <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
@@ -230,136 +229,178 @@
                     </div>
                 </div>
             </section>
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <!-- To the right -->
+            <div class="pull-right hidden-xs">
+                Anything you want
+            </div>
+            <!-- Default to the left -->
+            <strong>Copyright &copy; 2018
+                <a href="#">TheRang</a>.</strong> All rights reserved.
+        </footer>
+    </div>
 
-            <script src="bower_components/jquery/dist/jquery.min.js"></script>
-            <!-- Bootstrap 3.3.7 -->
-            <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-            <!-- DataTables -->
-            <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-            <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-            <!-- SlimScroll -->
-            <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-            <!-- FastClick -->
-            <script src="bower_components/fastclick/lib/fastclick.js"></script>
-            <!-- AdminLTE App -->
-            <script src="dist/js/adminlte.min.js"></script>
-            <!-- AdminLTE for demo purposes -->
-            <script src="bower_components/raphael/raphael.min.js"></script>
-            <script src="bower_components/morris.js/morris.min.js"></script>
-            <script src="dist/js/demo.js"></script>
-            <script>
-                let username = "<%=username%>";
-                console.log(username);
-                let count = 0;
-                let html0 = '';
-                let html = '';
-                let a = '';
-                $('#search').click(function () {
-                    let Txtype = $('#Txtype').val();
-                    let num = $('#num').val();
-                    let key = Txtype + num;
-                    let cmd = 'query("history","' + key + '")';
-                    console.log(cmd);
-                    $.ajax({
-                        url: '/api',
-                        type: 'post',
-                        data: {
-                            cmd: cmd
-                        },
-                        success: function (data) {
-                            console.log(data);
-                            // data=JSON.parse(data);
-                            // console.log(data);
-                            data = eval('(' + data + ')');
-                            if (data == []) {
-                                html0 = '<tr><td>查无此证！</td></tr>';
-                            } else {
-                                let tx = [];
-                                for (let k = 0; k < data.length; k++) {
-                                    let value = data[k].value;
-                                    let timestamp = data[k].timestamp;
-                                    tx.push({
-                                        'timestamp': timestamp,
-                                        'value': value
-                                    });
-                                    count = k + 1;
-                                }
-                                console.log(count);
-                                html0 = '<tr><th>共找到' + count + '条记录</th></tr>';
-                                $.each(tx, function (i, item) {
-                                    var a = i + 1;
-                                    if (item.value.num.length === 18) {
-                                        html += '<tr><td id="tds">' + a +
-                                            '<tr><th>操作时间：</th>' +
-                                            '<td>' + item.timestamp + '</td></tr>' +
-                                            '<tr> <th> 姓名 ：</th>' +
-                                            '<td>' + item.value.name + '</td>' +
-                                            '<th> 性别 :</th>' +
-                                            '<td>' + item.value.sex + '</td></tr>' +
-                                            '<tr><th> 出生日期： </th>' +
-                                            '<td>' + item.value.birthday + '</td>' +
-                                            '<th> 入学日期： </th>' +
-                                            '<td>' + item.value.begin + '</td></tr>' +
-                                            '<tr><th > 毕业日期： </th>' +
-                                            '<td>' + item.value.end + '</td>' +
-                                            '<th> 学校名称： </th>' +
-                                            '<td>' + item.value.school + '</td></tr>' +
-                                            '<tr><th > 专业： </th>' +
-                                            '<td>' + item.value.major + '</td>' +
-                                            '<th> 学历类别： </th>' +
-                                            '<td>' + item.value.txtype + '</td></tr>' +
-                                            '<tr><th> 学制： </th>' +
-                                            '<td>' + item.value.schoolsystem + '</td>' +
-                                            '<th> 学习形式： </th>' +
-                                            '<td>' + item.value.form + '</td></tr>' +
-                                            '<tr><th > 层次： </th>' +
-                                            '<td>' + item.value.level + '</td>' +
-                                            '<th> 证书编号： </th>' +
-                                            '<td>' + item.value.num + '</td></tr>' +
-                                            '<tr><th> 发证日期： </th>' +
-                                            '<td>' + item.value.certdate + '</td></tr>'
-                                    } else {
-                                        html += '<tr><td id="tds">' + a + '</td></tr>' +
-                                            '<tr><th>操作时间：</th>' +
-                                            '<td>' + item.timestamp + '</td></tr>' +
-                                            '<tr> <th> 姓名 ：</th>' +
-                                            '<td>' + item.value.name + '</td>' +
-                                            '<th> 性别 :</th>' +
-                                            '<td>' + item.value.sex + '</td></tr>' +
-                                            '<tr><th> 出生日期： </th>' +
-                                            '<td>' + item.value.birthday + '</td>' +
-                                            '<th> 学校名称： </th>' +
-                                            '<td>' + item.value.school + '</td></tr>' +
-                                            '<tr><th > 专业： </th>' +
-                                            '<td>' + item.value.major + '</td>' +
-                                            '<th> 学历类别： </th>' +
-                                            '<td>' + item.value.txtype + '</td></tr>' +
-                                            '<tr><th > 学科： </th>' +
-                                            '<td>' + item.value.degree + '</td>' +
-                                            '<th> 证书编号： </th>' +
-                                            '<td>' + item.value.num + '</td></tr>' +
-                                            '<tr><th> 发证日期： </th>' +
-                                            '<td>' + item.value.certdate + '</td></tr>'
-                                        if (item.value.status) {
-                                            html += '<tr><td>该证书已被撤销！</td></tr>' +
-                                                '<tr><td> 撤销原因为：</td></tr>' +
-                                                '<td>' + item.value.reason + '</td></tr>'
-                                        }
-                                    }
-                                });
-                                $('#count').append(html0);
-                                $('#list').append(html);
-                                // $('#his_table').DataTable();
-                                $('#result').show();
-                            };
-                        },
-                        error: function (e) {
-                            alert('server error!');
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- DataTables -->
+    <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="bower_components/raphael/raphael.min.js"></script>
+    <script src="bower_components/morris.js/morris.min.js"></script>
+    <script src="dist/js/demo.js"></script>
+    <script>
+        let username = "<%=username%>";
+        let college = "<%=college%>";
+        let role = "<%=role%>";
+        console.log(username);
+        let count = 0;
+        let html0 = '';
+        let html = '';
+        // let a = '';
+        $('#search').click(function () {
+            $("#count").html("");
+            $("#list").html("");
+            if ($('#num').val().length != 18 && $('#Txtype').val() == "BYZ") {
+                alert("请输入正确的证书编号！");
+                return;
+            }
+            if ($('#num').val().length != 16 && $('#Txtype').val() == "XWZ") {
+                alert("请输入正确的证书编号！");
+                return;
+            }
+            let Txtype = $('#Txtype').val();
+            let num = $('#num').val();
+            let key = Txtype + num;
+            let cmd = 'query("history","' + key + '")';
+            console.log(cmd);
+
+            // var his_table = $('#his_table').Table();
+            // if (his_table) {
+            //     his_table.clear();
+            //     his_table.destroy();
+            // }
+            $.ajax({
+                url: '/api',
+                type: 'post',
+                data: {
+                    cmd: cmd
+                },
+                success: function (data) {
+                    data = eval('(' + data + ')');
+                    console.log(data);
+                    if (data == []) {
+                        html0 = '<tr><td>查无此证！</td></tr>';
+                    } else {
+                        let html0 = '';
+                        let html = '';
+                        let tx = [];
+                        for (let k = 0; k < data.length; k++) {
+                            let value = data[k].value;
+                            let timestamp = data[k].timestamp;
+                            tx.push({
+                                'timestamp': timestamp,
+                                'value': value
+                            });
+                            count = k + 1;
                         }
-                    });
+                        console.log(count);
+                        
+                        // $.each(tx, function (i, item) {
+                        for (let i in tx) {
+                            var a = Number(i) + 1;
+                            let item = tx[i];
+                            console.log(item);
+                            if (item.value.school == college && item.value.level == role) {
+                                if (item.value.num.length === 18) {
+                                    html += '<tr><td id="tds">' + a + '</td></tr>' +
+                                        '<tr><th>操作时间：</th>' +
+                                        '<td>' + item.timestamp + '</td></tr>' +
+                                        '<tr> <th> 姓名 ：</th>' +
+                                        '<td>' + item.value.name + '</td>' +
+                                        '<th> 性别 :</th>' +
+                                        '<td>' + item.value.sex + '</td></tr>' +
+                                        '<tr><th> 出生日期： </th>' +
+                                        '<td>' + item.value.birthday + '</td>' +
+                                        '<th> 入学日期： </th>' +
+                                        '<td>' + item.value.begin + '</td></tr>' +
+                                        '<tr><th > 毕业日期： </th>' +
+                                        '<td>' + item.value.end + '</td>' +
+                                        '<th> 学校名称： </th>' +
+                                        '<td>' + item.value.school + '</td></tr>' +
+                                        '<tr><th > 专业： </th>' +
+                                        '<td>' + item.value.major + '</td>' +
+                                        '<th> 学历类别： </th>' +
+                                        '<td>' + item.value.txtype + '</td></tr>' +
+                                        '<tr><th> 学制： </th>' +
+                                        '<td>' + item.value.schoolsystem + '</td>' +
+                                        '<th> 学习形式： </th>' +
+                                        '<td>' + item.value.form + '</td></tr>' +
+                                        '<tr><th > 层次： </th>' +
+                                        '<td>' + item.value.level + '</td>' +
+                                        '<th> 证书编号： </th>' +
+                                        '<td>' + item.value.num + '</td></tr>' +
+                                        '<tr><th> 发证日期： </th>' +
+                                        '<td>' + item.value.certdate + '</td></tr>';
+                                } else {
+                                    html += '<tr><td id="tds">' + a + '</td></tr>' +
+                                        '<tr><th>操作时间：</th>' +
+                                        '<td>' + item.timestamp + '</td></tr>' +
+                                        '<tr> <th> 姓名 ：</th>' +
+                                        '<td>' + item.value.name + '</td>' +
+                                        '<th> 性别 :</th>' +
+                                        '<td>' + item.value.sex + '</td></tr>' +
+                                        '<tr><th> 出生日期： </th>' +
+                                        '<td>' + item.value.birthday + '</td>' +
+                                        '<th> 学校名称： </th>' +
+                                        '<td>' + item.value.school + '</td></tr>' +
+                                        '<tr><th > 专业： </th>' +
+                                        '<td>' + item.value.major + '</td>' +
+                                        '<th> 学历类别： </th>' +
+                                        '<td>' + item.value.txtype + '</td></tr>' +
+                                        '<tr><th > 学科： </th>' +
+                                        '<td>' + item.value.degree + '</td>' +
+                                        '<th> 证书编号： </th>' +
+                                        '<td>' + item.value.num + '</td></tr>' +
+                                        '<tr><th> 发证日期： </th>' +
+                                        '<td>' + item.value.certdate + '</td>' +
+                                        '<th > 层次： </th>' +
+                                        '<td>' + item.value.level + '</td></tr>';
+                                    if (item.value.status) {
+                                        html += '<tr><td>该证书已被撤销！</td></tr>' +
+                                            '<tr><td> 撤销原因为：</td></tr>' +
+                                            '<td>' + item.value.reason +
+                                            '</td></tr>'
+                                    }
+                                }
+                                html0 = '<tr><th>共找到' + count + '条记录</th></tr>';
+                            }else{
+                                html0='<tr><th>该查询结果不在您查询权限内！</th></tr>';
+                            }
+                        }
+                        $('#count').append(html0);
+                        $('#list').append(html);
+                        // $('#his_table').DataTable();
+                        $('#result').show();
+                    };
+                },
+                error: function (e) {
+                    alert('server error!');
+                }
+            });
 
-                });
-            </script>
+        });
+    </script>
 </body>
 
 </html>

@@ -15,7 +15,10 @@ exports.renderLogin = function (req, res) {
     // console.log('1');
     res.render('login', {
         title: 'Login',
-        messages:null
+        messages:null,
+        username: req.session.username,
+        college: req.session.college,
+        role: req.session.role
     });
     // next()
 };
@@ -35,7 +38,9 @@ exports.renderRegister = function (req, res) {
 exports.renderTotal = function (req, res, next) {
     res.render('total', {
         title: 'Total',
-        // username: req.session.username
+        username: req.session.username,
+        college: req.session.college,
+        role: req.session.role
     });
 };
 
@@ -133,7 +138,9 @@ exports.renderConductor = function (req, res, next) {
 exports.renderInformation = function (req, res, next) {
     res.render('information', {
         title: 'Information',
-        // username: req.session.username
+        username: req.session.username,
+        college: req.session.college,
+        role: req.session.role
     });
 };
 
@@ -167,4 +174,12 @@ exports.renderHistory = function (req, res, next) {
             role: req.session.role
         });
     }
+};
+
+exports.renderDemo = function (req, res, next) {
+
+    res.render('demo', {
+        title: 'demo',
+        username: req.session.username
+        });
 };

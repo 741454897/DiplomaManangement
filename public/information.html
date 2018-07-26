@@ -216,6 +216,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <td class="col-md-3">
                                                 <span class="msg"></span>
                                             </td>
+                                            <td class="col-md-3" style="text-align: right"><label for="level">层　　次：</label></td>
+                                            <td class="col-md-3">
+                                                <span class="level"></span>
+                                            </td>
                                         </tr>
                                    </tbody>
                                    <tbody id="BYZ_body" style="display: none">
@@ -276,7 +280,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             </td>
                                             <td class="col-md-3" style="text-align: right"><label for="level">层　　次：</label></td>
                                             <td class="col-md-3">
-                                                <span id="level"></span>
+                                                <span class="level"></span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -361,32 +365,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
         var reg = new RegExp("&#34;", "g"); //创建正则RegExp对象     
         mess = mess.replace(reg, '"');
         pic_src = pic_src.replace(reg, '"');
-        let data = eval('(' + mess + ')');
-        console.log(data);
-        if(data){
-            data = JSON.parse(data);
+        // console.log(data);
+        if(mess){
+            let data = eval('(' + mess + ')');
+            // data = JSON.parse(data);
             // console.log(data);
             // console.log(data.num);
-            $('.num').val(data.num);
-            $('.txtype').val(data.txtype);
-            $('.school').val(data.school);
-            $('.certdate').val(data.certdate);
-            $('.name').val(data.name);
-            $(".sex").val(data.sex);
-            $(".birthday").val(data.birthday);
-            $(".major").val(data.major);
+            $('.num').text(data.num);
+            $('.txtype').text(data.txtype);
+            $('.school').text(data.school);
+            $('.certdate').text(data.certdate);
+            $('.name').text(data.name);
+            $(".sex").text(data.sex);
+            $(".birthday").text(data.birthday);
+            $(".major").text(data.major);
+            $('.level').text(data.level);
             //毕业证
             if(data.num.length == 18){
-                $('#begin').val(data.begin);
-                $('#end').val(data.end);
-                $('#level').val(data.level);
-                $('#class').val(data.class);
-                $('#form').val(data.form);
-                $("#schoolsystem").val(data.schoolsystem);
+                $('#begin').text(data.begin);
+                $('#end').text(data.end);
+                // $('#level').text(data.level);
+                $('#class').text(data.class);
+                $('#form').text(data.form);
+                $("#schoolsystem").text(data.schoolsystem);
                 $('#BYZ_body').show();
                 $('#XWZ_body').hide();
             }else{//学位证
-                $('#degree').val(data.degree);
+                $('#degree').text(data.degree);
                 $('#XWZ_body').show();
                 $('#BYZ_body').hide();
             }
@@ -401,13 +406,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             '<td colspan="3"><span>' + data.reason + '</span></input>' +
                         '</tr>';
                 $('tbody').append(html);
-                if(pic_src){
-                    $('#img').show();
-                    $('#img').attr("src", pic_src);
-                }else{
-                    $('#info').show();
-                }  
             }
+            if(pic_src){
+                $('#img').show();
+                $('#img').attr("src", pic_src);
+            }else{
+                $('#info').show();                
+            }  
         }else{
             $('#not_exit').show();
             $('#info').show();

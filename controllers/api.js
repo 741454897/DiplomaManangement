@@ -1,4 +1,3 @@
-
 /**
  * 响应客户端api请求，调用API，返回json结果作为响应
  * 注意，方法名应与routeApi.js保持一致
@@ -15,14 +14,10 @@ var MongoClient = require("mongodb").MongoClient;
 var DBurl = 'mongodb://localhost:27017/myproject';
 const assert = require('assert');
 var mgclient = null;
-
 var user_list = {};
-// var user = {};
-
 exports.login = function (req, res, next) {
     let username = req.body.username;
     let password = req.body.password;
-
     let college = req.body.college;
     let role = req.body.role;
 
@@ -43,14 +38,14 @@ exports.login = function (req, res, next) {
     }else{
         user_list[username] = user_info;
     }
-
-
     (async () => {
         try {
             mgclient = await MongoClient.connect(DBurl);
             let col = mgclient.db().collection('users');
             //查询mongodb并与输入的帐号密码进行匹配。
-            let docs = await col.find({ "_id": username }).toArray();
+            let docs = await col.find({
+                "_id": username
+            }).toArray();
             mgclient.close();
             let docsStr = docs.join();
             if (docsStr === "") {
@@ -59,10 +54,15 @@ exports.login = function (req, res, next) {
                     title: 'Login',
                     messages: '无效的用户名或密码错误!'
                 });
-            } else {//成功登录
+            } else {
                 password = crypto.pbkdf2Sync(password, 'njustXP2018', 10000, 64, 'md5').toString('base64');
                 if (username === docs[0]._id && password === docs[0].pwd) {
                     req.session.username = username;
+                    ///////////////////////////////////////////////////////////////////添加
+                    req.session.college = docs[0].college;
+                    req.session.role = docs[0].role;
+                    console.log(docs[0].college);
+
                     //fc_list[username] = fc;
                     (async () => {
                         let fc = await FConn.FConnect(username);
@@ -70,7 +70,7 @@ exports.login = function (req, res, next) {
                         return res.redirect('conductor');
 
                     })()
-                } else {//密码错误
+                } else {
                     var num = user_list[username].num;
                     user_info = {
                         "num": num - 1,
@@ -78,10 +78,9 @@ exports.login = function (req, res, next) {
                     };
                     user_list[username] = user_info;
                     var times = user_list[username].num;
-
                     return res.render('login', {
                         title: 'Login',
-                        messages: ('无效的用户名或密码错误!')
+                        messages:  '无效的用户名或密码错误!'
                     });
                 }
             }
@@ -97,11 +96,9 @@ exports.login = function (req, res, next) {
     })()
 };
 
-
-
-
 exports.logout = function (req, res, next) {
     let username = req.session.username;
+    
     delete fc_list[username];
     req.session.destroy();
     return res.render('total', {
@@ -110,6 +107,7 @@ exports.logout = function (req, res, next) {
     });
 };
 
+
 exports.confirm = function (req, res, next) {
     let username = req.body.username;
     console.log(username);
@@ -117,27 +115,26 @@ exports.confirm = function (req, res, next) {
         (async () => {
             mgclient = await MongoClient.connect(DBurl);
             let col = mgclient.db().collection('users');
-            let docs = await col.find({ "_id": username }).toArray();
+            let docs = await col.find({
+                "_id": username
+            }).toArray();
             let docsStr = docs.join();
             if (docsStr === "") {
                 // var e = true;
                 res.write('true');
-            }
-            else {
+            } else {
                 res.write('false');
             }
             res.end();
             mgclient.close();
 
         })()
-    } catch (err) {
-    }
+    } catch (err) {}
 };
-
 exports.register = function (req, res, next) {
     let username = req.body.username;
     let password = req.body.password;
-
+    let phone = req.body.phone;
     let college = req.body.college;
     let role = req.body.role;
 
@@ -152,8 +149,15 @@ exports.register = function (req, res, next) {
             // console.log(cert);
             let salt = 'njustXP2018';
             password = crypto.pbkdf2Sync(password, salt, 10000, 64, 'md5').toString('base64');
-            // let write = { _id: username, pwd: password, ca: cert.toString(), isValid: true };
-            let write = { _id: username, pwd: password, college: college, role: role, phone: phone,  ca: cert.toString(), isValid: true };
+            let write = {
+                _id: username,
+                pwd: password,
+                college: college,
+                role: role,
+                phone: phone,
+                ca: cert.toString(),
+                isValid: true
+            };
             let r = await col.insertOne(write);
             const assert = require('assert');
             assert.equal(1, r.insertedCount);
@@ -174,10 +178,10 @@ exports.register = function (req, res, next) {
     })()
 };
 
-
 exports.getMyTxHistory = function (req, res) {
     var username = req.session.username;
-
+    var college = req.session.college;
+    var role = req.session.role;
     // console.log(username);
     if (username === null) {
         return res.render('login', {
@@ -189,16 +193,10 @@ exports.getMyTxHistory = function (req, res) {
     (async () => {
         try {
             let fc = fc_list[username];
-            //let mytx = await eval('fc.mytx()');
-            //注意，函数mytx要遍历整条链，如果超过1000个区块，页面就挂了，可能超过10秒
-            //相同页面上已经调用过一次
-            //建议页面上用一个进度条显示进度，然后用session保存一个数组mytx，以后每次购买完成之后都mytx.push(新交易)
-            //用增量更新来避免完整更新，以改善性能
-            let mytx = await fc.mytx();
-            //for (let i = 0; i < mytx.length; i++) { //每个交易
-            //    let tx = mytx[i];
+
+            let mytxall = await fc.mytxall();//所有交易
+
             for (let tx of mytx) {
-                //let now_txid = tx['tx_id'];
                 let now_txid = tx.tx_id;
                 //let writeset = tx['writeset'];
                 let writeset = tx.writeset;
@@ -221,8 +219,7 @@ exports.getMyTxHistory = function (req, res) {
 
                     let count = 0;
                     for (let k = 0; k < the_history.length; k++) {
-                        //console.log(the_history[k]);
-                        //if (the_history[k]['txid'] === now_txid) {
+
                         if (the_history[k].txid === now_txid) {
                             count = k;
                         }
@@ -236,7 +233,6 @@ exports.getMyTxHistory = function (req, res) {
                         the_sell.isBuy = false;
                         data.push(the_sell);
                     }
-
                 }
             } //以上计算比较复杂，能否简化？
 
@@ -254,10 +250,9 @@ exports.getMyTxHistory = function (req, res) {
 //通用API调用， 比如 /?cmd=query('history','bid01')
 exports.api = function (req, res, next) {
     var username = req.session.username;
-
-    let college = req.body.college;
-    let role = req.body.role;
-
+    var college = req.session.college;
+    var role = req.session.role;
+    // console.log(username);
     if (username === null) {
         return res.render('login', {
             title: 'Login',
@@ -271,26 +266,23 @@ exports.api = function (req, res, next) {
             var cmd1 = 'fc.' + req.query.cmd;
             var cmd2 = 'fc.' + req.body.cmd;
             // var length = req.body.length;
-            var cmd ='';
-            if(cmd1 == 'fc.undefined'){//post方法
-
+            var cmd = '';
+            if (cmd1 == 'fc.undefined') { //post方法
                 cmd = cmd2;
                 // console.log(cmd);
-
-            }else{//get方法
+            } else { //get方法
                 cmd = cmd1;
                 // console.log(cmd);
             }
-            // console.log(cmd);
+            console.log(cmd);
             if (cmd.startsWith('fc.invoke') || cmd.startsWith('fc.putBase64')) {
                 eval(cmd); //注意，invoke调用也可能有返回，但invoke(put,k,v)无返回
                 res.write('录入成功！');
             } else {
-
-                var ret =await eval(cmd);
+                var ret = await eval(cmd);
                 if (ret !== undefined) {
                     res.write(ret);
-                    // console.log(ret);
+                    console.log(ret);
                 }
             }
         } catch (err) {
@@ -305,7 +297,7 @@ exports.api = function (req, res, next) {
 
 exports.getAllTx = function (req, res, next) {
     var username = req.session.username;
-
+    
     console.log("username=" + username);
     if (username === null) {
         return res.render('login', {
@@ -316,22 +308,44 @@ exports.getAllTx = function (req, res, next) {
     (async () => {
         try {
             let fc = fc_list[username];
+            let BeginTime = req.query.BeginTime;
+            let EndTime = req.query.EndTime;
+            let txtype = req.query.txtype;
+
+            // console.log("txtype is ",txtype);
 
             let mytx = await fc.mytxall("1");
-            let tx = [];
-
-            for (let k = 1; k < mytx.length; k++) {
-
-                let writeset = mytx[k].writeset;
-                let timestamp = mytx[k].timestamp;
-                value = writeset[0].value;
-                tx.push({
-                    'timestamp': timestamp,
-                    'value': value
-                });
+            let tx = [];//存放我的交易
+            for (let k = 1; k < mytx.length; k++) {     
+                if(mytx[k].isMine){
+                    let writeset = mytx[k].writeset;
+                    let timestamp = mytx[k].timestamp;
+                    for(let i in writeset){
+                        value = writeset[i].value;
+                        tx.push({
+                            'timestamp': timestamp,
+                            'value': value
+                        });
+                    }
+                
+                };
+                
             }
-            res.write(JSON.stringify(tx));
-
+            let re = [];//时间段内
+            for(let i in tx){
+                if(tx[i].value && tx[i].timestamp > BeginTime && tx[i].timestamp < EndTime){
+                    let data = JSON.parse(tx[i].value);
+                    data = eval(data);
+                    // console.log(txtype);
+                    // console.log(data.txtype);
+                    if(data.num && data.txtype == txtype){
+                        re.push(data);
+                    }
+                }
+                
+            }
+            console.log(re);
+            res.write(JSON.stringify(re));
         } catch (err) {
             console.error(err);
             res.write('错误:' + err);
@@ -343,10 +357,8 @@ exports.getAllTx = function (req, res, next) {
 
 exports.remove = function (req, res, next) {
     var username = req.session.username;
-
-    let college = req.body.college;
-    let role = req.body.role;
-
+    let college = req.session.college;
+    let role = req.session.role;
     console.log("username=" + username);
     if (username === null) {
         return res.render('login', {
@@ -359,23 +371,25 @@ exports.remove = function (req, res, next) {
             let fc = fc_list[username];
             let key = req.query.key;
             let reason = req.query.reason;
-            let curtx = await fc.query("get",key);
+            let curtx = await fc.query("get", key);
             // let msg = eval('(' + curtx + ')');
             // console.log(msg);
-
-            if(!curtx){
-                res.write('无此证书！');                
-            }else if(eval('(' + curtx + ')').status){
-                res.write('该证书已被撤销！');                
-            }else{
-
+            if (!curtx) {
+                res.write('无此证书！');
+            }else if(eval('(' + curtx + ')').school!==college||eval('(' + curtx + ')').level!==role){
+                res.write('您没有撤销该证书的权限！');
+            } 
+            else if (eval('(' + curtx + ')').status) {
+                res.write('该证书已被撤销！');
+            } else {
                 let result = JSON.parse(curtx);
 
                 result.status = "撤销";
                 result.reason = reason;
                 // console.log(result);
 
-                fc.invoke("put",key,JSON.stringify(result));
+
+                fc.invoke("put", key, JSON.stringify(result));
                 res.write('撤销成功！');
             }
         } catch (err) {
@@ -389,7 +403,6 @@ exports.remove = function (req, res, next) {
 exports.getCert = function (req, res, next) {
     let num = req.body.num;
     let Txtype = req.body.txtype;
-
     // console.log('num=', num);
     // console.log('txtype=', Txtype);
     (async () => {
@@ -404,8 +417,8 @@ exports.getCert = function (req, res, next) {
             let re = await fc.query("get", key);
             console.log(re);
             let pic_src = '';
-            
-            if(re){//若证书存在，查找样本
+
+            if (re) { //若证书存在，查找样本
                 let result = JSON.parse(re);
                 // console.log(result.certdate);
                 var certdate = result.certdate;
@@ -425,16 +438,13 @@ exports.getCert = function (req, res, next) {
                         ]
                     }
                 }
-
-                let pic = await fc.query("selectBy",JSON.stringify(selector1));
-                
-
-                if(pic != '{}'){//存在样例 
+                let pic = await fc.query("selectBy", JSON.stringify(selector1));
+                if (pic != '{}') { //存在样例 
                     let jsonobj = JSON.parse(pic);
                     //{k1:{v1},k2:{v2},...}转换为[{_id:k1,v1},{_id:k2,v2},...]
                     let newobjs = [];
                     for (let x in jsonobj) {
-                       jsonobj[x]._id = x;
+                        jsonobj[x]._id = x;
                         newobjs.push(jsonobj[x]);
                     }
                     //最后一张图片
@@ -444,9 +454,8 @@ exports.getCert = function (req, res, next) {
                         cur_pic.date > last_pic.date ? last_pic = cur_pic : null;
                     }
                     pic_src = last_pic.base64;
-                }        
+                }
             }
-            
             return res.render('information', {
                 title: 'Information',
                 messages: re,
@@ -458,24 +467,40 @@ exports.getCert = function (req, res, next) {
     })();
 };
 
-exports.rangesearch = function (req, res, next) {//模糊查询
-    let num = req.body.num;
-    let school = req.body.school;
-    let certdate = req.body.certdate;
-    let txtype = req.body.txtype;
-    console.log(txtype);
+
+exports.rangesearch = function (req, res, next) { //模糊查询
+    var username = req.session.username;
+    let college = req.session.college;
+    let role = req.session.role;
+    console.log("username=" + username);
+    if (username === null) {
+        return res.render('login', {
+            title: 'Login',
+            messages: '请先登录!'
+        });
+    }
+
     (async () => {
         try {
-            let fc = fc_list['admin'];
-            //console.log(fc);
-            if (fc == undefined) {
-                fc = await FConn.FConnect('admin');
-                fc_list['admin'] = fc;
-            }
-            //console.log(fc);
-            //let re = await fc.query("get", num);//查询key值
-
+            let fc = fc_list[username];
+            let num = req.body.num;
+            let school = req.body.school;
+            let certdate = req.body.certdate;
+            let name = req.body.name;
+            let major = req.body.major;
+            let txtype = req.body.txtype;
+            let sex = req.body.sex;
+            console.log(txtype);
             let filter = []
+
+            filter.push({
+                school: college
+            });
+
+            filter.push({
+                level: role
+            })
+
             if (txtype !== "") {
                 filter.push({
                     txtype: txtype
@@ -496,11 +521,22 @@ exports.rangesearch = function (req, res, next) {//模糊查询
                     certdate: certdate
                 })
             }
-            //if (txtype == num == school == certdate == "") {
-            //    filter.push({
-            //        certdate: "    "
-            //    })
-            // }
+            if (name !== "") {
+                filter.push({
+                    name: name
+                })
+            }
+            if (major !== "") {
+                filter.push({
+                    major: major
+                })
+            }
+            if (sex !== "") {
+                filter.push({
+                    sex: sex
+                })
+            }
+
             console.log(filter);
             //怎么实现组合查询？
             let selector1 = {
@@ -511,7 +547,6 @@ exports.rangesearch = function (req, res, next) {//模糊查询
             let res1 = await fc.query("selectBy", JSON.stringify(selector1));
             console.log(res1);
             if (res1 == "{}") {
-
                 res.write('未找到');
             } else {
                 res.write(res1);

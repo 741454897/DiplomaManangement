@@ -35,11 +35,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
     <style>
-        .msg{
+        .msg {
             display: none;
             color: red;
             font-weight: normal;
-            
+
         };
     </style>
 </head>
@@ -132,21 +132,53 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">目 录</li>
                     <!-- Optionally, you can add icons to the links -->
-                    <li><a href="/conductor"><i class="fa fa-link"></i><span>主界面</span></a></li>
+                    <li>
+                        <a href="/conductor">
+                            <i class="fa fa-link"></i>
+                            <span>主界面</span>
+                        </a>
+                    </li>
                     <li class="treeview active">
                         <a href="#">
-                            <i class="fa fa-link"></i><span>单个操作</span>
-                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                            <i class="fa fa-link"></i>
+                            <span>单个操作</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/history">查询历史</a></li>
-                            <li class="active"><a href="/onemodify">单个修改</a></li>
+                            <li>
+                                <a href="/history">历史查询</a>
+                            </li>
+                            <li class="active">
+                                <a href="/onemodify">单个修改</a>
+                            </li>
                         </ul>
                     </li>
-                    <li ><a href="/excel"><i class="fa fa-link"></i><span>批量录入</span></a></li>
-                    <li><a href="/count"><i class="fa fa-link"></i><span>模糊查询</span></a></li>
-                    <li><a href="/revoke"><i class="fa fa-link"></i><span>撤销</span></a></li>
-                    <li><a href="/sample"><i class="fa fa-link"></i><span>样本</span></a></li>
+                    <li>
+                        <a href="/excel">
+                            <i class="fa fa-link"></i>
+                            <span>批量录入</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/count">
+                            <i class="fa fa-link"></i>
+                            <span>模糊查询</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/revoke">
+                            <i class="fa fa-link"></i>
+                            <span>撤销</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/sample">
+                            <i class="fa fa-link"></i>
+                            <span>样本</span>
+                        </a>
+                    </li>
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
@@ -193,27 +225,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
-                               <table class="table" style="border-top: none">
-                                   <tbody id="XWZ_body" style="display: none">
-                                       <tr>
-                                            <td style="text-align: right"><label for="num">证书编号：</label></td>
-                                            <td>
-                                               <input type="text" class="form-control num">
-                                               <label for="msg" class="msg">请输入16位的证书编号</label>
+                                <table class="table" style="border-top: none">
+                                    <tbody id="XWZ_body" style="display: none">
+                                        <tr>
+                                            <td style="text-align: right">
+                                                <label for="num">证书编号：</label>
                                             </td>
-                                           <td style="text-align: right"><label for="txtype">层　　次：</label></td>
-                                           <td>
-                                                <select class="btn btn-default txtype">
-                                                    <option value="学士学位证书">学士学位</option>
-                                                    <option value="硕士学位证书">硕士学位</option>
-                                                    <option value="博士学位证书">博士学位</option>
-                                                </select>
-                                           </td>
-                                       </tr>
-                                       <tr>
-                                            <td style="text-align: right"><label for="degree">学　　位：</label></td>
                                             <td>
-                                                <select class="btn btn-default" id="degree" >
+                                                <input type="text" class="form-control num">
+                                                <label for="msg" class="msg">请输入16位的证书编号</label>
+                                            </td>
+                                            <td style="text-align: right">
+                                                <label for="txtype">证书类别：</label>
+                                            </td>
+                                            <td>
+                                                <select class="btn btn-default" id="txtype" name="txtype">
+                                                    <option value="学士学位证书">学士学位证书</option>
+                                                    <option value="硕士学位证书">硕士学位证书</option>
+                                                    <option value="博士学位证书">博士学位证书</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: right">
+                                                <label for="degree">学位类别：</label>
+                                            </td>
+                                            <td>
+                                                <select class="btn btn-default" id="degree">
                                                     <option value="工学">工学</option>
                                                     <option value="理学">理学</option>
                                                     <option value="经济学">经济学</option>
@@ -229,125 +267,178 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                     <option value="艺术学">艺术学</option>
                                                 </select>
                                             </td>
-                                            <td style="text-align: right"><label for="school">学　　校：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="school">学　　校：</label>
+                                            </td>
                                             <td>
                                                 <input type="text" class="form-control school">
                                                 <label for="msg" class="msg">学校不能为空</label>
                                             </td>
                                         </tr>
-                                       <tr>
-                                            <td style="text-align: right"><label for="certdate">发证日期：</label></td>
+                                        <tr>
+                                            <td style="text-align: right">
+                                                <label for="certdate">发证日期：</label>
+                                            </td>
                                             <td>
                                                 <input type="date" class="form-control certdate">
                                                 <label for="msg" class="msg">请输入正确的发证日期</label>
                                             </td>
-                                            <td style="text-align: right"><label for="name">姓　　名：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="name">姓　　名：</label>
+                                            </td>
                                             <td>
                                                 <input type="text" class="form-control name">
                                                 <label for="msg" class="msg">姓名不能为空</label>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="text-align: right"><label for="sex">性　　别：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="sex">性　　别：</label>
+                                            </td>
                                             <td>
                                                 <select class="btn btn-default sex">
                                                     <option value="男">男</option>
                                                     <option value="女">女</option>
                                                 </select>
                                             </td>
-                                            <td style="text-align: right"><label for="birthday">出生日期：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="birthday">出生日期：</label>
+                                            </td>
                                             <td>
                                                 <input type="date" class="form-control birthday">
                                                 <label for="msg" class="msg">请输入正确的出生日期</label>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="text-align: right"><label for="major">专　　业：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="major">专　　业：</label>
+                                            </td>
                                             <td>
                                                 <input type="text" class="form-control major">
                                                 <label for="msg" class="msg">专业不能为空</label>
                                             </td>
-                                            <td style="text-align: right"><label for="status">证书状态：</label></td>
-                                            <td><input type="text" class="form-control status"></td>
-                                        </tr>
+                                            <td style="text-align: right">
+                                                <label for="level">层　　次：</label>
+                                            </td>
+                                            <td>
+                                                <select class="btn btn-default level">
+                                                    <option value="本科">本科</option>
+                                                    <option value="硕士">硕士</option>
+                                                    <option value="博士">博士</option>
+                                                </select>
+                                            </td>
+                                            <tr>
+                                                <td style="text-align: right">
+                                                    <label for="status">证书状态：</label>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control status">
+                                                </td>
+                                                <td style="text-align: right">
+                                                    <label for="reason">撤销原因：</label>
+                                                </td>
+                                                <td colspan="3">
+                                                    <input type="text" class="form-control reason"></input>
+                                            </tr>
+                                    </tbody>
+                                    <tbody id="BYZ_body" style="display: none">
                                         <tr>
-                                            <td style="text-align: right"><label for="reason">撤销原因：</label></td>
-                                            <td colspan="3"><input type="text" class="form-control reason"></input>
-                                        </tr>
-
-                                   </tbody>
-                                   <tbody id="BYZ_body" style="display: none">
-                                        <tr>
-                                            <td style="text-align: right"><label for="num">证书编号：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="num">证书编号：</label>
+                                            </td>
                                             <td>
                                                 <input type="text" class="form-control num">
                                                 <label for="msg" class="msg">请输入18位的证书编号</label>
                                                 </input>
                                             </td>
-                                            <td style="text-align: right"><label for="txtype">证书类别：</label></td>
-                                            <td><input type="text" class="form-control txtype" value="毕业证书" disabled="disabled"></td>
+                                            <td style="text-align: right">
+                                                <label for="txtype">证书类别：</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control txtype" value="毕业证书" disabled="disabled">
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td style="text-align: right"><label for="schoolsystem">学　　制：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="schoolsystem">学　　制：</label>
+                                            </td>
                                             <td>
                                                 <select class="btn btn-default" id="schoolsystem" name="schoolsystem">
                                                     <option value="4">4</option>
                                                     <option value="3">3</option>
                                                 </select>
                                             </td>
-                                            <td style="text-align: right"><label for="school">学　　校：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="school">学　　校：</label>
+                                            </td>
                                             <td>
                                                 <input type="text" class="form-control school">
                                                 <label for="msg" class="msg">学校不能为空</label>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="text-align: right"><label for="certdate">发证日期：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="certdate">发证日期：</label>
+                                            </td>
                                             <td>
                                                 <input type="date" class="form-control certdate">
                                                 <label for="msg" class="msg">请输入正确的发证日期</label>
                                             </td>
-                                            <td style="text-align: right"><label for="name">姓　　名：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="name">姓　　名：</label>
+                                            </td>
                                             <td>
                                                 <input type="text" class="form-control name">
                                                 <label for="msg" class="msg">姓名不能为空</label>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="text-align: right"><label for="sex">性　　别：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="sex">性　　别：</label>
+                                            </td>
                                             <td>
                                                 <select class="btn btn-default sex">
                                                     <option value="男">男</option>
                                                     <option value="女">女</option>
                                                 </select>
                                             </td>
-                                            <td style="text-align: right"><label for="birthday">出生日期：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="birthday">出生日期：</label>
+                                            </td>
                                             <td>
                                                 <input type="date" class="form-control birthday">
                                                 <label for="msg" class="msg">请输入正确的出生日期</label>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="text-align: right"><label for="begin">入学日期：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="begin">入学日期：</label>
+                                            </td>
                                             <td>
                                                 <input type="date" class="form-control" id="begin">
                                                 <label for="msg" class="msg">请输入正确的入学日期</label>
                                             </td>
-                                            <td style="text-align: right"><label for="end">毕业日期：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="end">毕业日期：</label>
+                                            </td>
                                             <td>
                                                 <input type="date" class="form-control" id="end">
                                                 <label for="msg" class="msg">请输入正确的毕业日期</label>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="text-align: right"><label for="major">专　　业：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="major">专　　业：</label>
+                                            </td>
                                             <td>
                                                 <input type="text" class="form-control major">
                                                 <label for="msg" class="msg">专业不能为空</label>
                                             </td>
-                                            <td style="text-align: right"><label for="level">层　　次：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="level">层　　次：</label>
+                                            </td>
                                             <td>
-                                                <select class="btn btn-default" id="level" name="level">
+                                                <select class="btn btn-default level">
                                                     <option value="本科">本科</option>
                                                     <option value="大专">大专</option>
                                                     <option value="硕士">硕士</option>
@@ -356,33 +447,45 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="text-align: right"><label for="form">学习形式：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="form">学习形式：</label>
+                                            </td>
                                             <td>
                                                 <select class="btn btn-default" id="form" name="form">
                                                     <option value="普通全日制">普通全日制</option>
                                                     <option value="非全日制">非全日制</option>
                                                 </select>
                                             </td>
-                                            <td style="text-align: right"><label for="class">学历类别：</label></td>
+                                            <td style="text-align: right">
+                                                <label for="class">学历类别：</label>
+                                            </td>
                                             <td>
                                                 <input type="text" class="form-control" id="class">
                                                 <label for="msg" class="msg">学历类别不能为空</label>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="text-align: right"><label for="status">证书状态：</label></td>
-                                            <td><input type="text" class="form-control status"></td>
+                                            <td style="text-align: right">
+                                                <label for="status">证书状态：</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control status">
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td style="text-align: right"><label for="reason">撤销原因：</label></td>
-                                            <td colspan="3"><input type="text" class="form-control reason"></td>
+                                            <td style="text-align: right">
+                                                <label for="reason">撤销原因：</label>
+                                            </td>
+                                            <td colspan="3">
+                                                <input type="text" class="form-control reason">
+                                            </td>
                                         </tr>
-                                   </tbody>
-                               </table>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="box-footer" id="Btn"  style="display: none">
+                            <div class="box-footer" id="Btn" style="display: none">
                                 <button type="button" id="modify" class="btn btn-info pull-right">修改</button>
-                                <button type="button" id="cancel" class="btn btn-default pull-right" style="margin-right: 40px;">取消</button>     
+                                <button type="button" id="cancel" class="btn btn-default pull-right" style="margin-right: 40px;">取消</button>
                             </div>
                         </div>
                     </div>
@@ -390,7 +493,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </section>
         </div>
         <!-- /.content-wrapper -->
-
         <!-- Main Footer -->
         <footer class="main-footer">
             <!-- To the right -->
@@ -424,24 +526,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="dist/js/demo.js"></script>
     <script src="dist/js/xlsx.core.min.js"></script>
     <script>
-        $('#search').click(function(){
+        let username = "<%= username %>";
+        let college = "<%=college%>";
+        let role = "<%= role %>";
+        $('#search').click(function () {
             let Txtype = $('#Txtype').val();
             let num = $('#num').val();
             let key = Txtype + num;
             let cmd = 'query("get","' + key + '")';
             console.log(cmd);
+            $('.msg').hide();
+            $('#Btn').hide();
+            $('#modify').attr("disabled", false);
             $.ajax({
                 url: '/api',
                 type: 'post',
                 data: {
-                    cmd:cmd
+                    cmd: cmd
                 },
                 success: function (data) {
-                    data = eval('(' + data + ')');
+                    
                     console.log(data)
-                    if(data){
+                    if (data) {
+                        data = eval('(' + data + ')');
                         $('#Btn').show();
-                        data = JSON.parse(data);
+                        // data = JSON.parse(data);
                         console.log(data);
                         // console.log(data.num);
                         $('.num').val(data.num);
@@ -452,33 +561,52 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         $(".sex").val(data.sex);
                         $(".birthday").val(data.birthday);
                         $(".major").val(data.major);
+                        $('.level').val(data.level);
                         //毕业证
-                        if(Txtype == "BYZ"){
+                        if (Txtype == "BYZ") {
                             $('#begin').val(data.begin);
                             $('#end').val(data.end);
-                            $('#level').val(data.level);
                             $('#class').val(data.class);
                             $('#form').val(data.form);
                             $("#schoolsystem").val(data.schoolsystem);
                             $('#BYZ_body').show();
                             $('#XWZ_body').hide();
-                        }else{//学位证
+                        } else { //学位证
                             $('#degree').val(data.degree);
                             $('#XWZ_body').show();
                             $('#BYZ_body').hide();
                         }
-                        if(data.status){
+                        if (data.status) {
                             $('.status').val(data.status);
                             $('.reason').val(data.reason);
                         }
-                            $('.status').attr("disabled",true);
-                            $('.reason').attr("disabled",true);
-                    }else{
+                        $('.status').attr("disabled", true);
+                        $('.reason').attr("disabled", true);
+                        $('.txtype').attr("disabled", true);
+                        $('.school').attr("disabled", true);
+                        $('.level').attr("disabled", true);
+                        if ($('.school').val() !== college || $('.level').val() !== role) {
+                            $('.num').attr("disabled", true);
+                            $('.name').attr("disabled", true);
+                            $('.sex').attr("disabled", true);
+                            $('.birthday').attr("disabled", true);
+                            $('.major').attr("disabled", true);
+                            if (Txtype == "BYZ") {
+                                $('#begin').attr("disabled", true);
+                                $('#end').attr("disabled", true);
+                                $('#class').attr("disabled", true);
+                                $('#form').attr("disabled", true);
+                                $("#schoolsystem").attr("disabled", true);
+                            } else { //学位证
+                                $('#degree').attr("disabled", true);
+                            }
+                        }
+                    } else {
                         alert("查无此证！");
                         $('#BYZ_body').hide();
                         $('#XWZ_body').hide();
                     }
-        
+
                 },
                 error: function (e) {
                     alert('server error!');
@@ -486,7 +614,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             });
         });
 
-        $('#cancel').click(function(){
+        $('#cancel').click(function () {
             $('#BYZ_body').hide();
             $('#XWZ_body').hide();
             $('#Btn').hide();
@@ -499,33 +627,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
         //     /^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$/
         // );
         //失去焦点事件
-        $('#BYZ_body .num').blur(function(){
-            if($('#BYZ_body .num').val().length != 18){
+        $('#BYZ_body .num').blur(function () {
+            if ($('#BYZ_body .num').val().length != 18) {
                 flag = false;
                 $(this).parent().find($('.msg')).show();
-            }else{
+            } else {
                 flag = true;
                 $(this).parent().find($('.msg')).hide();
             }
-            if(!flag){
-                $('#modify').attr("disabled",true);
-            }else{
-                $('#modify').attr("disabled",false);
+            if (!flag) {
+                $('#modify').attr("disabled", true);
+            } else {
+                $('#modify').attr("disabled", false);
             }
         })
 
-        $('#XWZ_body .num').blur(function(){
-            if($('#XWZ_body .num').val().length != 18){
+        $('#XWZ_body .num').blur(function () {
+            if ($('#XWZ_body .num').val().length != 16) {
                 flag = false;
                 $(this).parent().find($('.msg')).show();
-            }else{
+            } else {
                 flag = true;
                 $(this).parent().find($('.msg')).hide();
             }
-            if(!flag){
-                $('#modify').attr("disabled",true);
-            }else{
-                $('#modify').attr("disabled",false);
+            if (!flag) {
+                $('#modify').attr("disabled", true);
+            } else {
+                $('#modify').attr("disabled", false);
             }
         })
 
@@ -545,9 +673,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         })
 
 
-        $('#modify').click(function(){
+
+        $('#modify').click(function () {
             //毕业证
-            if($('#Txtype').val() == "BYZ"){
+            if ($('#Txtype').val() == "BYZ") {
 
                 var num = $('#BYZ_body .num').val();
                 var school = $('#BYZ_body .school').val();
@@ -557,15 +686,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 var birthday = $('#BYZ_body .birthday').val();
                 var major = $('#BYZ_body .major').val();
                 var txtype = $('#BYZ_body .txtype').val();
-
                 var begin = $('#begin').val();
                 var end = $('#end').val();
-                var level = $('#level').val();
-                var classes = $('#class').val();//用class会报错
+                var level = $('#BYZ_body.level').val();
+                var classes = $('#class').val(); //用class会报错
                 var form = $('#form').val();
                 var schoolsystem = $("#schoolsystem").val();
                 console.log(sex);
-            }else{//学位证
+            } else { //学位证
 
                 var num = $('#XWZ_body .num').val();
                 var school = $('#XWZ_body .school').val();
@@ -575,15 +703,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 var birthday = $('#XWZ_body .birthday').val();
                 var major = $('#XWZ_body .major').val();
                 var txtype = $('#XWZ_body .txtype').val();
-
+                var level = $('#XWZ_body .level').val();
                 var degree = $('#degree').val();
             };
-
-            if($('.status').val()){
+            if ($('.status').val()) {
                 var status = $('.status').val();
                 var reason = $('.reason').val();
             }
-
             var key = $('#Txtype').val() + num;
             var jsonobj = {
                 num: num,
@@ -600,19 +726,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 class: classes,
                 form: form,
                 schoolsystem: schoolsystem,
-                degree:degree,
-                status:status,
-                reason:reason
+                degree: degree,
+                status: status,
+                reason: reason
             }
 
-            var cmd = 'invoke("put","'+key+'",\''+JSON.stringify(jsonobj)+'\')';
+            var cmd = 'invoke("put","' + key + '",\'' + JSON.stringify(jsonobj) + '\')';
             console.log(cmd);
 
             $.ajax({
                 url: '/api',
                 type: 'post',
                 data: {
-                    cmd:cmd
+                    cmd: cmd
                 },
                 success: function (data) {
                     alert("修改成功！");

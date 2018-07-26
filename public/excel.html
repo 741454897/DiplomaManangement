@@ -123,21 +123,53 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">目 录</li>
                     <!-- Optionally, you can add icons to the links -->
-                    <li><a href="/conductor"><i class="fa fa-link"></i><span>主界面</span></a></li>
+                    <li>
+                        <a href="/conductor">
+                            <i class="fa fa-link"></i>
+                            <span>主界面</span>
+                        </a>
+                    </li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-link"></i><span>单个操作</span>
-                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                            <i class="fa fa-link"></i>
+                            <span>单个操作</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/history">查询历史</a></li>
-                            <li><a href="/onemodify">单个修改</a></li>
+                            <li>
+                                <a href="/history">历史查询</a>
+                            </li>
+                            <li>
+                                <a href="/onemodify">单个修改</a>
+                            </li>
                         </ul>
                     </li>
-                    <li class="active"><a href="/excel"><i class="fa fa-link"></i><span>批量录入</span></a></li>
-                    <li><a href="/count"><i class="fa fa-link"></i><span>模糊查询</span></a></li>
-                    <li><a href="/revoke"><i class="fa fa-link"></i><span>撤销</span></a></li>
-                    <li><a href="/sample"><i class="fa fa-link"></i><span>样本</span></a></li>
+                    <li class="active">
+                        <a href="/excel">
+                            <i class="fa fa-link"></i>
+                            <span>批量录入</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/count">
+                            <i class="fa fa-link"></i>
+                            <span>模糊查询</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/revoke">
+                            <i class="fa fa-link"></i>
+                            <span>撤销</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/sample">
+                            <i class="fa fa-link"></i>
+                            <span>样本</span>
+                        </a>
+                    </li>
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
@@ -238,28 +270,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="dist/js/demo.js"></script>
     <script src="dist/js/xlsx.core.min.js"></script>
     <script>
+        let username = "<%=username%>";
+        let college = "<%=college%>";
+        let role = "<%=role%>";
         $('#select').click(function () {
             $('#upfile').val('');
             $('#upfile').click();
         });
-
-
         let diplima = [];
         var flag = true;
-
-
         $('#upfile').on("change", function (e) {
-
             // 清空数组
             diplima.splice(0, diplima.length);
             flag = true;
             var html = '';
             //获取证书类型
             var Txtype = $('#Txtype').val();
-
             //将文件显示在列表中
             $('#FileList').empty("");
-
             html = '<tr><td id="tds">' + e.currentTarget.files[0].name + '</td>' +
                 '<td id="tds">' + (e.currentTarget.files[0].size / 1000).toFixed(1) + 'KB</td>' +
                 '<td id="status"><span>检查文件内容</span></td>' +
@@ -267,10 +295,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             '</tr>'
             $('#FileList').append(html);
             //console.log(e.currentTarget.files);
-
-
             var files = e.target.files;
-
             var fileReader = new FileReader;
             fileReader.onload = function (ev) {
                 try {
@@ -284,11 +309,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     //console.log('文件类型不正确');
                     return;
                 }
-
-
                 // 表格的表格范围，可用于判断表头是否数量是否正确
                 var fromTo = '';
-
                 // 遍历每张表读取
                 for (var sheet in workbook.Sheets) {
                     if (workbook.Sheets.hasOwnProperty(sheet)) {
@@ -298,12 +320,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         break; // 如果只取第一张表，就取消注释这行
                     }
                 }
-
                 //存放excel中已检查过的num，用来检查重复
                 var arr = [];
-
                 for (var i = 0; i < data.length; i++) {
-
                     //是否存在编码问题?
                     diplima.push({
                         'num': data[i].证书编号,
@@ -319,24 +338,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         'major': data[i].专业,
                         'degree': data[i].学位,
                         'level': data[i].层次,
-                        'class':data[i].学历类别,
+                        'class': data[i].学历类别,
                         'form': data[i].学习形式
-
                     });
-
                     //检查日期正则表达式
                     var regex = new RegExp(
                         /^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$/
                     );
-
-                    
-                    if (Txtype == "BYZ") {//检查学历证书特有属性
-                        if(diplima[i].txtype !== "毕业证书" ){
+                    if (Txtype == "BYZ") { //检查学历证书特有属性
+                        if (diplima[i].txtype !== "毕业证书") {
                             flag = false;
                             $('#status').html('<span style="color: red;">第' + (i + 2) + '行证书类别错误</span>');
                             break;
                         }
-                        if (!diplima[i].schoolsystem ) { //学制
+
+                        if (!diplima[i].schoolsystem) { //学制
                             flag = false;
                             $('#status').html('<span style="color: red;">第' + (i + 2) + '行学制为空</span>');
                             // //console.log(diplima);
@@ -352,31 +368,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             $('#status').html('<span style="color: red;">第' + (i + 2) + '行毕业日期错误</span>');
                             break;
                         }
-                        if(!diplima[i].class){
+                        if (!diplima[i].class) {
                             flag = false;
                             $('#status').html('<span style="color: red;">第' + (i + 2) + '行学历类别为空</span>');
                             // //console.log(diplima);
                             break;
                         }
-                        if(!diplima[i].level){
+                        if (!diplima[i].level) {
                             flag = false;
                             $('#status').html('<span style="color: red;">第' + (i + 2) + '行层次为空</span>');
                             // //console.log(diplima);
                             break;
                         }
-                        if(!diplima[i].form){
+                        if (!diplima[i].form) {
                             flag = false;
                             $('#status').html('<span style="color: red;">第' + (i + 2) + '行学习形式为空</span>');
                             // //console.log(diplima);
                             break;
                         }
-
-                    }else{//学位证书特有属性
-
-                        if(diplima[i].txtype !="学士学位证书" && diplima[i].txtype !="硕士学位证书" && diplima[i].txtype !="博士学位证书"){//整张表都是一个level
+                    } else { //学位证书特有属性
+                        if (diplima[i].txtype != "学士学位证书" && diplima[i].txtype != "硕士学位证书" && diplima[i].txtype !=
+                            "博士学位证书") { //整张表都是一个level
                             console.log(diplima[i].txtype);
                             flag = false;
                             $('#status').html('<span style="color: red;">第' + (i + 2) + '行证书类别错误</span>');
+                            break;
+                        }
+                        if(diplima[i].txtype == "学士学位证书"&&diplima[i].level!="本科"||diplima[i].txtype == "硕士学位证书"&&diplima[i].level!="硕士"||diplima[i].txtype == "博士学位证书"&&diplima[i].level!="博士"){
+                            flag = false;
+                            $('#status').html('<span style="color: red;">第' + (i + 2) + '行证书层次错误</span>');
                             break;
                         }
                         if (!diplima[i].degree) { //学位
@@ -385,16 +405,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             // //console.log(diplima);
                             break;
                         }
-
                     }
-
                     //公共属性
                     //检查、学校、姓名、专业、发证日期、性别
-                    
                     if (!diplima[i].school) {
                         flag = false;
-                        $('#status').html('<span style="color: red;">第' + (i + 2) + '行学校不正确</span>');
+                        $('#status').html('<span style="color: red;">第' + (i + 2) + '行学校为空</span>');
                         // //console.log(diplima);
+                        break;
+                    }
+                    if (diplima[i].school !== college) {
+                        flag = false;
+                        $('#status').html('<span style="color: red;">第' + (i + 2) +
+                            '行学校错误，不得录入其他学校的数据</span>');
+                        break;
+                    }
+                    if (!diplima[i].level) {
+                        flag = false;
+                        $('#status').html('<span style="color: red;">第' + (i + 2) + '行层次为空</span>');
+                        // //console.log(diplima);
+                        break;
+                    }
+                    if (diplima[i].level !== role) {
+                        flag = false;
+                        $('#status').html('<span style="color: red;">第' + (i + 2) +
+                            '行层次错误，不得录入其他层次的数据</span>');
                         break;
                     }
                     if (!diplima[i].name) {
@@ -409,7 +444,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         // //console.log(diplima);
                         break;
                     }
-
                     //检查性别
                     if (diplima[i].sex != "男" && diplima[i].sex != "女") {
                         flag = false;
@@ -417,26 +451,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         // //console.log(diplima);
                         break;
                     }
-
                     //检查位数
-                    if ((diplima[i].num.length != 18 && Txtype == "BYZ") || (diplima[i].num.length != 16 && Txtype == "XWZ")) {
+                    if ((diplima[i].num.length != 18 && Txtype == "BYZ") || (diplima[i].num.length != 16 &&
+                            Txtype == "XWZ")) {
                         flag = false;
                         $('#status').html('<span style="color: red;">第' + (i + 2) + '行证书编号长度有误</span>');
                         // //console.log(diplima);
                         break;
                     }
-
                     //编号查重、整张表的证书类别一致？
                     if (i > 0) {
                         for (var j = 0; j < arr.length; j++) {
                             if (arr[j] == diplima[i].num) {
                                 flag = false;
-                                $('#status').html('<span style="color: red;">第' + (j + 2) + '和第' + (i + 2) +'行证书编号重复</span>');
+                                $('#status').html('<span style="color: red;">第' + (j + 2) + '和第' + (i + 2) +
+                                    '行证书编号重复</span>');
                                 // //console.log(diplima);
                                 break;
                             }
                         }
-                        if(diplima[i].txtype !== diplima[i-1].txtype){
+                        if (diplima[i].txtype !== diplima[i - 1].txtype) {
                             flag = false;
                             $('#status').html('<span style="color: red;">第' + (i + 2) + '行证书类别错误</span>');
                             break;
@@ -445,7 +479,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     arr.push(diplima[i].num);
 
 
-                    
+
                     if (!regex.test(diplima[i].certdate)) { //发证日期
                         flag = false;
                         $('#status').html('<span style="color: red;">第' + (i + 2) + '行发证日期错误</span>');
@@ -456,11 +490,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         $('#status').html('<span style="color: red;">第' + (i + 2) + '行生日日期错误</span>');
                         break;
                     }
-                    
-                };//一轮for循环结束
+
+                }; //一轮for循环结束
 
                 // console.log(diplima.length);
-                if(flag){
+                if (flag) {
                     if (diplima.length == 0) {
                         $('#status').html('<span style="color: red;">文件数据为空</span>');
                         $('#upload').attr("disabled", true);
@@ -470,11 +504,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         $('#upload').attr("disabled", false);
                         // console.log(diplima.length); 
                     }
-                }else{
+                } else {
                     $('#upload').attr("disabled", true);
                 }
-                
-            }//onload结束
+
+            } //onload结束
 
             // 以二进制方式打开文件
             fileReader.readAsBinaryString(files[0]);
@@ -486,10 +520,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 $('#FileList').empty("");
                 $('#upload').attr("disabled", true);
             });
-
-
         });
-
         $('#Txtype').on("change", function () {
             // 清空
             diplima.splice(0, diplima.length);

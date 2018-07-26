@@ -215,45 +215,65 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <select id="Txtype" name="Txtype" class="btn btn-block btn-default">
                                                 <option value="BYZ" selected="selected">学历证书</option>
                                                 <option value="xs_XWZ">学士学位证书</option>
-                                                <option value="ss_XWZ">硕士士学位证书</option>
+                                                <option value="ss_XWZ">硕士学位证书</option>
                                                 <option value="bs_XWZ">博士学位证书</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group" >
+                                        <label for="global_filter" class="col-sm-3 control-label">全局搜索：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="global_filter" name="global_filter" />
+                                        </div>
+                                    </div> -->
+                                    <div class="form-group " id="filter_col0" n="0" xwz="0" byz="0">
                                         <label for="num" class="col-sm-3 control-label">证书编号：</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="num" name="num" />
+                                            <input type="text" class="form-control column_filter" id="num" name="num"/>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" id="filter_col1" n="1" xwz="3" byz="3">
                                         <label for="school" class="col-sm-3 control-label">学　　校：</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="school" name="school" />
+                                            <input type="text" class="form-control column_filter" id="school" name="school"/>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group"  id="filter_col2" n="2" xwz="4" byz="4">
                                         <label for="certdate" class="col-sm-3 control-label">发证日期：</label>
                                         <div class="col-sm-9">
-                                            <input type="date" class="form-control" id="certdate" name="certdate"/>
+                                            <input type="date" class="form-control column_filter" id="certdate" name="certdate"/>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="school" class="col-sm-3 control-label">专 业：</label>
+                                    <div class="form-group" id="filter_col3" n="3" xwz="8" byz="10">
+                                        <label for="school" class="col-sm-3 control-label">专　　业：</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="major" name="major" />
+                                            <input type="text" class="form-control column_filter" id="major" name="major"/>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="certdate" class="col-sm-3 control-label">姓 名：</label>
+                                    <div class="form-group" id="filter_col4" n="4" xwz="6" byz="6">
+                                        <label for="school" class="col-sm-3 control-label">性　　别：</label>
+                                        <div class="col-sm-3">
+                                            <select name="sex" id="sex" class="btn btn-block btn-default column_filter">
+                                                <option value="" selected="selected">请选择...</option>
+                                                <option value="男">男</option>
+                                                <option value="女">女</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="filter_col5" n="5" xwz="5" byz="5">
+                                        <label for="certdate" class="col-sm-3 control-label">姓　　名：</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="可以不输入完整" />
+                                            <input type="text" class="form-control column_filter" id="name" name="name"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="certdate" class="col-sm-3 control-label">录入时间：</label>
-                                        <div class="col-sm-9">
-                                            <input type="datetime" class="form-control" id="InTime" name="InTime" />
+                                        <div class="col-sm-3">
+                                            <input type="datetime" class="form-control" id="BeginTime" name="BeginTime" />
+                                        </div>
+                                        <div class="col-sm-1">--</div>
+                                        <div class="col-sm-3">
+                                            <input type="datetime" class="form-control" id="EndTime" name="EndTime" />
                                         </div>
                                     </div>
                                 </div>
@@ -284,9 +304,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
                             </div>
                             <div class="box-body">
-                                <div class="box-group">
-                                    <label for="count">搜索结果共计：</label><span id="count" name="count"></span>
-                                </div>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td><label for="search">在结果在搜索：</label></td>
+                                            <td><input type="text" class="form-control global_filter" disabled="disabled" id="global_filter"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="count">搜索结果共计：</label></td>
+                                            <td>共<span id="count" name="count">0</span>条记录</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
@@ -307,7 +336,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <table id="XWZ_table" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
                                                 <th>证书编号</th>
                                                 <th>证书类别</th>
                                                 <th>学位</th>
@@ -335,7 +363,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <table id="BYZ_table" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
                                                 <th>证书编号</th>
                                                 <th>证书类别</th>
                                                 <th>学制</th>
@@ -380,9 +407,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- REQUIRED JS SCRIPTS -->
 
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
         <!-- Bootstrap 3.3.7 -->
         <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <!-- DataTables -->
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
         <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
         <!-- SlimScroll -->
@@ -397,6 +426,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <script src="dist/js/demo.js"></script>
         <script>
             let count = '';
+            var Table ;
+            function filterGlobal (table) {
+                table.search(
+                    $('#global_filter').val()
+                ).draw();
+                var info = table.page.info();
+                var dataRows = info.recordsDisplay;
+                $('#count').text(dataRows);
+            };
+            
             $('#search').click(function () {
                 $('#XWZ_result').hide();
                 $('#BYZ_result').hide();
@@ -406,6 +445,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 let Txtype = $('#Txtype').val();
                 let name = $("#name").val();
                 let major = $("#major").val();
+                let sex = $("#sex").val();
+                let BeginTime = $("#BeginTime").val();
+                let EndTime  = $("#EndTime").val();
                 let txtype = "";
                 switch (Txtype) {
                     case "BYZ":
@@ -432,21 +474,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         certdate: certdate,
                         name:name,
                         major:major,
+                        sex:sex,
+                        BeginTime:BeginTime,
+                        EndTime:EndTime,
                         txtype: txtype
                     },
                     success: function (data) {
                         console.log(data);
                         if (data == "未找到") {
-                            count = 0;
+                            alert("未找到！");
+                            $('#count').text("0");
                         } else {
                             data = eval('(' + data + ')');
-                            console.log(data);
+                            // console.log(data);
                             let html = '';
                             var arr = [];
                             for (let i in data) {
                                 arr.push(data[i]);
-                                count++;
                             }
+                            var count = arr.length;
+                            $('#count').text(count);                            
                             if (Txtype == "xs_XWZ" || Txtype == "ss_XWZ" || Txtype == "bs_XWZ") {
                                 var XWZ_table = $('#XWZ_table').DataTable();
                                 if (XWZ_table) {
@@ -455,9 +502,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 }
                                 $.each(arr, function (i, item) {
                                     // console.log(i,item);
-                                    var a = i + 1;
                                     //学位证书
-                                    html += '<tr><td id="tds">' + a +
+                                    html += '<tr>'+
                                         '<td id="tds">' + item.num + '</td>' +
                                         '<td id="tds">' + item.txtype + '</td>' +
                                         '<td id="tds">' + item.degree + '</td>' +
@@ -479,6 +525,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 $('#XWZ_body').append(html);
                                 $('#XWZ_table').DataTable();
                                 $('#XWZ_result').show();
+                                Table = $('#XWZ_table').DataTable();
                             } else {
                                 var BYZ_table = $('#BYZ_table').DataTable();
                                 if (BYZ_table) {
@@ -487,10 +534,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 }
 
                                 $.each(arr, function (i, item) {
-                                    console.log(i, item);
-                                    var a = i + 1;
+                                    // console.log(i, item);
                                     //毕业证书
-                                    html += '<tr><td id="tds">' + a +
+                                    html += '<tr>'+
                                         '<td id="tds">' + item.num + '</td>' +
                                         '<td id="tds">' + item.txtype + '</td>' +
                                         '<td id="tds">' + item.schoolsystem + '</td>' +
@@ -517,9 +563,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 $('#BYZ_body').append(html);
                                 $('#BYZ_table').DataTable();
                                 $('#BYZ_result').show();
+                                Table = $('#BYZ_table').DataTable();
+                                // console.log(Table);
+                                // console.log($('#BYZ_table').DataTable());
                             }
+                            
+                            $('input.global_filter').attr("disabled",false);
                         }
-                        $('#count').val(count);
+                        
+                        
                     },
                     error: function (e) {
                         alert("未连接到服务器!");
@@ -527,6 +579,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                 });
             });
+
+            $('input.global_filter').on( 'keyup click', function () {
+                filterGlobal(Table);             
+            });
+
         </script>
 </body>
 

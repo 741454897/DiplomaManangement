@@ -363,7 +363,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <label for="degree">学　　位：</label>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control column_filter" id="filter13" n="13" xwz="3" byz="">
+                                                <input type="text" class="form-control column_filter" disabled="disabled" id="filter13" n="13" xwz="3" byz="">
                                             </td>
                                             <td style="text-align: right">
                                                 <label for="status">操作：</label>
@@ -483,6 +483,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="dist/js/demo.js"></script>
     <script>
 
+
+        $('#Txtype').on('change',function () {
+            if($('#Txtype').val().slice(-3) == "XWZ"){
+                $('#filter1, #filter6, #filter7, #filter10, #filter11').attr("disabled",true);
+                $('#filter13').attr("disabled",false);
+            }else{
+                $('#filter1, #filter6, #filter7, #filter10, #filter11').attr("disabled",false);
+                $('#filter13').attr("disabled",true);
+            }
+        });
 
         let count = '';
         var Table;

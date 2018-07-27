@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html>
@@ -21,7 +20,7 @@
     <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
     <link rel="stylesheet" href="bower_components/morris.js/morris.css">
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-    
+
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect. -->
@@ -34,183 +33,96 @@
     <link rel="stylesheet" href="dist/css/mycss.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <style>
+        .container {
+            width: 310px;
+            margin: auto;
+            padding: 0px;
+        }
 
-            .container {
-                width: 310px;
-                margin:auto;
-                padding: 0px;
-            }
-    
-            input {
-                display: block;
-                width: 290px;
-                line-height: 40px;
-                margin: 10px 0;
-                padding: 0 10px;
-                outline: none;
-                border: 1px solid #c8cccf;
-                border-radius: 4px;
-                color: #6a6f77;
-            }
-    
-            #msg {
-                width: 100%;
-                line-height: 40px;
-                font-size: 14px;
-                text-align: center;
-            }
+        input {
+            display: block;
+            width: 290px;
+            line-height: 40px;
+            margin: 10px 0;
+            padding: 0 10px;
+            outline: none;
+            border: 1px solid #c8cccf;
+            border-radius: 4px;
+            color: #6a6f77;
+        }
 
-            .row {
-                margin-top: 0px;
-                margin-bottom: 0px;
-            }
-        </style>
+        #msg {
+            width: 100%;
+            line-height: 40px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .row {
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+    </style>
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition login-page">
     <div class="wrapper">
         <!-- Main Header -->
         <header class="main-header">
-
-            <!-- Logo -->
-            <a href="/total" class="logo">
-                <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini">
-                    <b>F</b>NC</span>
-                <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg">
-                    <b>证书认证系统</b>
-                </span>
-            </a>
-
+            <div class="login-logo" style="margin-top: 50px">
+                <a href="total.html">
+                    <b>证书</b>认证系统</a>
+            </div>
         </header>
-        <!-- Left side column. contains the logo and sidebar -->
-        <aside class="main-sidebar">
 
-            <!-- sidebar: style can be found in sidebar.less -->
-            <section class="sidebar">
 
-                <!-- Sidebar user panel (optional) -->
-                
-                <!-- Sidebar Menu -->
-                <ul class="sidebar-menu" data-widget="tree">
-                    <li class="header">目 录</li>
-                    <!-- Optionally, you can add icons to the links -->
-                    <li>
-                        <a href="/conductor">
-                            <i class="fa fa-link"></i>
-                            <span>主界面</span>
-                        </a>
-                    </li>
-                    <li class="treeview active">
-                        <a href="#">
-                            <i class="fa fa-link"></i>
-                            <span>单个操作</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a href="/history">查询历史</a>
-                            </li>
-                            <li class="active">
-                                <a href="/onemodify">单个修改</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="/excel">
-                            <i class="fa fa-link"></i>
-                            <span>批量录入</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/count">
-                            <i class="fa fa-link"></i>
-                            <span>模糊查询</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/revoke">
-                            <i class="fa fa-link"></i>
-                            <span>撤销</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/sample">
-                            <i class="fa fa-link"></i>
-                            <span>样本</span>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.sidebar-menu -->
-            </section>
-            <!-- /.sidebar -->
-        </aside>
+        <!-- Main content -->
+        <section class="content container-fluid">
+            <div class="row">
+            <div class="col-md-3"></div>
+                <div class="col-md-6" style="text-align: center">
+                    <div class="box box-info" style="border-top-color: #f4f4f4">
+                        <div class="register-box-body">
+                            <p class="register-box-msg" style="float: center">注册一个新用户</p>
+                            <form action="/register" method="post">
+                                <!-- <form action="#" method="post"> -->
 
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <h1>
-                    管理员注册
-                </h1>
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-dashboard"></i>主页</a>
-                    </li>
-                    <li class="active">管理员注册</li>
-                </ol>
-            </section>
+                                <div class="form-group" >
+                                    <select name="role" id="role" class="btn btn-block btn-default">
+                                        <option value="硕士">硕士证书管理员</option>
+                                        <option value="博士">博士证书管理员</option>
+                                        <option value="本科" selected="selected">本科证书管理员</option>
+                                    </select>
+                                </div>
 
-            <!-- Main content -->
-            <section class="content container-fluid">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="box box-info">
-                            <div class="register-box-body">
-                                <p class="register-box-msg" style="float: left">注册一个新用户</p>
-                                <form action="/register" method="post">
-                                    <!-- <form action="#" method="post"> -->
+                                <div class="form-group" >
+                                    <select name="college" id="college" class="btn btn-block btn-default">
+                                        <option value="北京理工大学">北京理工大学</option>
+                                        <option value="南京理工大学" selected="selected">南京理工大学</option>
+                                    </select>
+                                </div>
 
-                                    <div class="form-group" style="width: 65%;">
-                                        <select name="role" id="role" class="btn btn-block btn-default">
-                                            <option value="硕士">硕士证书管理员</option>
-                                            <option value="博士">博士证书管理员</option>
-                                            <option value="本科" selected="selected">本科证书管理员</option>
-                                        </select>
+                                <div class="form-group has-feedback">
+                                    <div class="has-feedback" >
+                                        <input type="text" class="form-control" name="username" id="username" placeholder="用户名">
+                                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
                                     </div>
-
-                                    <div class="form-group" style="width: 65%;">
-                                        <select name="college" id="college" class="btn btn-block btn-default">
-                                            <option value="北京理工大学">北京理工大学</option>
-                                            <option value="南京理工大学" selected="selected">南京理工大学</option>
-                                        </select>
+                                    <div class="has-feedback " style="text-align: left">
+                                        <span id="useridSpan" style="display:none;color: #db0c0c;">用户已经被注册</span>
                                     </div>
+                                </div>
 
-                                    <div class="form-group has-feedback">
-                                        <div class="has-feedback" style="width: 65%;">
-                                            <input type="text" class="form-control" name="username" id="username" placeholder="用户名">
-                                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                                        </div>
-                                        <div class="has-feedback">
-                                            <span id="useridSpan" style="display:none;color: #db0c0c;">用户已经被注册</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- <div class="form-group has-feedback" style="width: 65%;">
+                                <!-- <div class="form-group has-feedback" >
                                         <input type="text" class="form-control" name="name" id="name" placeholder="姓名">
                                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                                     </div> -->
 
-                                    <div class="form-group has-feedback" style="width: 65%;">
-                                        <input type="text" class="form-control" name="phone" id="phone" placeholder="电话" />
-                                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                                    </div>
+                                <div class="form-group has-feedback" >
+                                    <input type="text" class="form-control" name="phone" id="phone" placeholder="电话" />
+                                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                </div>
 
-                                    <!-- <div class="form-group has-feedback row" style="width: 65%;">
+                                <!-- <div class="form-group has-feedback row" >
                                         <div class="form-group has-feedback col-sm-8">
                                             <input type="text" class="form-control" name="verification" id="verification" placeholder="输入验证码">
                                         </div>
@@ -219,7 +131,7 @@
                                         </div>
                                     </div> -->
 
-                                    <!-- <div class="form-group has-feedback row" style="width: 65%;">
+                                <!-- <div class="form-group has-feedback row" >
                                         <div class="form-group col-sm-8">
                                             <input type="text" class="form-control" name="IC" id="IC" placeholder="证件号码" />
                                         </div>
@@ -232,77 +144,71 @@
                                         </div>
                                     </div> -->
 
-                                    <div class="form-group has-feedback" style="width: 65%;">
-                                        <!-- <div class="has-feedback">                                     -->
-                                            <input type="password" class="form-control" name="password" id="password" placeholder="请输入您的密码">
-                                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                                        <!-- </div>
+                                <div class="form-group has-feedback" >
+                                    <!-- <div class="has-feedback">                                     -->
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="请输入您的密码">
+                                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                    <!-- </div>
                                         <div class="has-feedback"> -->
-                                            <!-- <span id="passwordSpan" style="display:none;color: #db0c0c;">密码至少为6位</span>
+                                    <!-- <span id="passwordSpan" style="display:none;color: #db0c0c;">密码至少为6位</span>
                                         </div> -->
-                                    </div>
+                                </div>
 
-                                    <div class="form-group has-feedback" style="width: 65%;">
-                                        <!-- <div class="has-feedback"> -->
-                                            <input type="password" class="form-control" name="retypepwd" id="retypepwd" placeholder="请确认您的密码">
-                                            <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-                                        <!-- </div>
+                                <div class="form-group has-feedback" >
+                                    <!-- <div class="has-feedback"> -->
+                                    <input type="password" class="form-control" name="retypepwd" id="retypepwd" placeholder="请确认您的密码">
+                                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                                    <!-- </div>
                                         <div class="has-feedback">
                                                 <span id="retypeSpan" style="display:none;color: #db0c0c;">两次密码不一致</span>
                                         </div> -->
+                                </div>
+                                <div class="form-group">
+                                    <label for="verifyslider" class="col-sm-3 control-label" style="float: right"></label>
+                                    <div class="col-sm-8">
+                                        <div class="container">
+                                            <div id="verifyslider" style="position: relative; left:30%"></div>
+                                            <div id="msg" class="msg"></div>
+                                        </div>
+
                                     </div>
-                                    <div class="form-group">
-                                            <label for="verifyslider" class="col-sm-3 control-label" style="float: right"></label>
-                                            <div class="col-sm-8">
-                                                <div class="container">
-                                                    <div id="verifyslider" style="position: relative"></div>
-                                                    <div id="msg" class="msg"></div>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
+                                </div>
 
-                                    <div class="row">
-                                        <!-- /.col -->
-                                        <div class="col-xs-8">
+                                <div class="row">
+                                    <!-- /.col -->
+                                    <div class="col-xs-8">
 
-                                        </div>
-                                        <div class="col-xs-4" style="margin-top: 15px">
-                                            <button type="submit" id="register" class="btn btn-primary btn-block btn-flat" style="position: relative;right: 237px">注册</button>
-                                        </div>
-                                        <!-- /.col -->
                                     </div>
-                                </form>
-                                <!-- /.social-auth-links -->
-                                <a href="/" class="text-center">已有账号，直接登录></a>
-                                <!-- <a href="login.html" class="text-center">已有账号，直接登录></a> -->
+                                    
+                                    <div class="col-xs-4" style="margin-top: 15px">
+                                        <button type="submit" id="register" class="btn btn-primary btn-block btn-flat" style="position: relative;">注册</button>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                            </form>
+                            <!-- /.social-auth-links -->
+                            <!-- <a href="/" class="text-center">已有账号，直接登录></a> -->
+                            <a href="/login" style="position: relative; right:30%;">已有账号，直接登录></a>
 
-                            </div>
-                            <!-- /.register-box-body -->
+                            <!-- <a href="login.html" class="text-center">已有账号，直接登录></a> -->
+
                         </div>
-                        <!-- /.register-box -->
-                        <!-- /.box-body -->
+                        <!-- /.register-box-body -->
                     </div>
+                    <!-- /.register-box -->
+                    <!-- /.box-body -->
                 </div>
+            </div>
 
-        </div>
-        
-        </section>
-        <footer class="main-footer">
-                <!-- To the right -->
-                <div class="pull-right hidden-xs">
-                    Anything you want
-                </div>
-                <!-- Default to the left -->
-                <strong>Copyright &copy; 2018
-                    <a href="#">TheRang</a>.</strong> All rights reserved.
-            </footer>
-        <!-- /.content -->
+    </div>
+
+    </section>
+    <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
 
     <!-- Main Footer -->
-    
+
     </div>
     <!-- ./wrapper -->
 
@@ -317,8 +223,8 @@
     <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <!-- SlimScroll -->
     <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-       <!-- FastClick -->
-       <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <!-- FastClick -->
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
     <script src="dist/js/adminlte.min.js"></script>
     <!-- iCheck -->
     <script src="plugins/iCheck/icheck.min.js"></script>
@@ -346,7 +252,7 @@
         });
 
         //获取username输入改变事件
-        $('#username').blur(function(){
+        $('#username').blur(function () {
             let username = $('#username').val();
 
             // alert(username);
@@ -359,7 +265,7 @@
                 success: function (e) {
                     if (e == 'false') {
                         $("#useridSpan").show();
-                       // alert("用户已经被注册");
+                        // alert("用户已经被注册");
                     } else {
                         $("#useridSpan").hide();
                     }
@@ -371,25 +277,25 @@
             });
         });
 
-    var cleanMsg = function () {
-        document.getElementById('msg').innerHTML = '';
-    }
-    VerifySlider.init({
-        el: document.getElementById('verifyslider'),
-        onSuccess: function () {
-            document.getElementById('msg').innerHTML = '验证成功！';
-            $('#msg').css("color", "green");
-            var form = document.getElementById('login_form');
-            // form.submit();
-            sub = true;
-        },
-        onFail: function () {
-            document.getElementById('msg').innerHTML = '验证失败，请重试！';
-            $('#msg').css("color", "red");
+        var cleanMsg = function () {
+            document.getElementById('msg').innerHTML = '';
+        }
+        VerifySlider.init({
+            el: document.getElementById('verifyslider'),
+            onSuccess: function () {
+                document.getElementById('msg').innerHTML = '验证成功！';
+                $('#msg').css("color", "green");
+                var form = document.getElementById('login_form');
+                // form.submit();
+                sub = true;
+            },
+            onFail: function () {
+                document.getElementById('msg').innerHTML = '验证失败，请重试！';
+                $('#msg').css("color", "red");
 
-        },
-        onRefresh: cleanMsg
-    })
+            },
+            onRefresh: cleanMsg
+        })
 
 
 
@@ -409,14 +315,14 @@
                 alert("用户名不能为admin！");
                 return false;
             }
-            if(reg.test(phone) == false){
+            if (reg.test(phone) == false) {
                 alert("电话号码填写有误");
                 return false;
             }
             if (len < 6) {
                 // $("#retypeSpan").hide();
                 // $("#passwordSpan").show();
-               alert("密码至少为6位。");
+                alert("密码至少为6位。");
                 return false;
 
             }
@@ -426,7 +332,7 @@
                 alert("两次输入密码不一致");
                 return false;
             }
-            if (sub == false){
+            if (sub == false) {
                 alert("验证失败");
                 return false;
             }
@@ -435,5 +341,3 @@
 </body>
 
 </html>
-
-

@@ -123,22 +123,59 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">目 录</li>
                     <!-- Optionally, you can add icons to the links -->
-                    <li class="active"><a href="/conductor"><i class="fa fa-link"></i><span>主界面</span></a></li>
+                    <li class="active">
+                        <a href="/conductor">
+                            <i class="fa fa-link"></i>
+                            <span>主界面</span>
+                        </a>
+                    </li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-link"></i><span>单个操作</span>
-                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                            <i class="fa fa-link"></i>
+                            <span>单个操作</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/history">查询历史</a></li>
-                            <li><a href="/onemodify">单个修改</a></li>
+                            <li>
+                                <a href="/history">历史查询</a>
+                            </li>
+                            <li>
+                                <a href="/onemodify">单个修改</a>
+                            </li>
                         </ul>
                     </li>
-                    <li><a href="/excel"><i class="fa fa-link"></i><span>批量录入</span></a></li>
-                    <li><a href="/count"><i class="fa fa-link"></i><span>模糊查询</span></a></li>
-                    <li><a href="/demo"><i class="fa fa-link"></i><span>操作历史</span></a></li>                
-                    <li><a href="/revoke"><i class="fa fa-link"></i><span>撤销</span></a></li>
-                    <li><a href="/sample"><i class="fa fa-link"></i><span>样本</span></a></li>
+                    <li>
+                        <a href="/excel">
+                            <i class="fa fa-link"></i>
+                            <span>批量录入</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/count">
+                            <i class="fa fa-link"></i>
+                            <span>模糊查询</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/demo">
+                            <i class="fa fa-link"></i>
+                            <span>操作历史</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/revoke">
+                            <i class="fa fa-link"></i>
+                            <span>撤销</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/sample">
+                            <i class="fa fa-link"></i>
+                            <span>样本</span>
+                        </a>
+                    </li>
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
@@ -168,14 +205,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <!-- small box -->
                         <div class="small-box bg-aqua">
                             <div class="inner">
-                                <h3>查询历史</h3>
-              
-                                <p>录入一个证书到区块中</p>
+                                <h3>历史查询</h3>
+
+                                <p>根据证书编号查询修改历史</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="/history" class="small-box-footer">查询历史<i class="fa fa-arrow-circle-right"></i>
+                            <a href="/history" class="small-box-footer">历史查询
+                                <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
                     </div>
@@ -184,13 +222,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="small-box bg-teal-active">
                             <div class="inner">
                                 <h3>单个修改</h3>
-              
+
                                 <p>修改已存于区块中的证书</p>
                             </div>
                             <div class="icon">
                                 <i class="fa fa-pencil"></i>
                             </div>
-                            <a href="/onemodify" class="small-box-footer">单个修改<i class="fa fa-arrow-circle-right"></i>
+                            <a href="/onemodify" class="small-box-footer">单个修改
+                                <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
                     </div>
@@ -199,13 +238,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="small-box bg-green">
                             <div class="inner">
                                 <h3>批量录入</h3>
-              
+
                                 <p>上传excel文档实现批量录入</p>
                             </div>
                             <div class="icon">
                                 <i class="fa fa-file-excel-o"></i>
                             </div>
-                            <a href="/excel" class="small-box-footer">批量录入<i class="fa fa-arrow-circle-right"></i>
+                            <a href="/excel" class="small-box-footer">批量录入
+                                <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
                     </div>
@@ -214,13 +254,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="small-box bg-olive">
                             <div class="inner">
                                 <h3>模糊查询</h3>
-              
+
                                 <p>根据部分信息匹配查询到对应的证书</p>
                             </div>
                             <div class="icon">
                                 <i class="fa fa-search"></i>
                             </div>
-                            <a href="/count" class="small-box-footer">模糊查询<i class="fa fa-arrow-circle-right"></i>
+                            <a href="/count" class="small-box-footer">模糊查询
+                                <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
                     </div>
@@ -229,13 +270,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="small-box bg-blue">
                             <div class="inner">
                                 <h3>加入范本</h3>
-              
+
                                 <p>录入证书范本</p>
                             </div>
                             <div class="icon">
                                 <i class="fa fa-file-image-o"></i>
                             </div>
-                            <a href="/sample" class="small-box-footer">加入范本<i class="fa fa-arrow-circle-right"></i>
+                            <a href="/sample" class="small-box-footer">加入范本
+                                <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
                     </div>
@@ -244,17 +286,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="small-box bg-orange">
                             <div class="inner">
                                 <h3>撤销证书</h3>
-              
                                 <p>撤销一个证书</p>
                             </div>
                             <div class="icon">
                                 <i class="fa fa-trash"></i>
                             </div>
-                            <a href="/revoke" class="small-box-footer">撤销证书<i class="fa fa-arrow-circle-right"></i>
+                            <a href="/revoke" class="small-box-footer">撤销证书
+                                <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
                     </div>
-                    
+
                 </div>
             </section>
         </div>
@@ -293,7 +335,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="dist/js/demo.js"></script>
     <script src="dist/js/xlsx.core.min.js"></script>
     <script>
-        
     </script>
 </body>
 

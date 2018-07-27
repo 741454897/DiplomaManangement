@@ -166,6 +166,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </a>
                     </li>
                     <li>
+                        <a href="/demo">
+                            <i class="fa fa-link"></i>
+                            <span>操作历史</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="/revoke">
                             <i class="fa fa-link"></i>
                             <span>撤销</span>
@@ -214,9 +220,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <div class="col-sm-4">
                                             <select id="Txtype" name="Txtype" class="btn btn-block btn-default">
                                                 <option value="BYZ" selected="selected">学历证书</option>
-                                                <option value="xs_XWZ">学士学位证书</option>
-                                                <option value="ss_XWZ">硕士学位证书</option>
-                                                <option value="bs_XWZ">博士学位证书</option>
+                                                <option value="XWZ">学位证书</option>
+
                                             </select>
                                         </div>
                                     </div>
@@ -229,25 +234,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <div class="form-group " id="filter_col0" n="0" xwz="0" byz="0">
                                         <label for="num" class="col-sm-3 control-label">证书编号：</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control column_filter" id="num" name="num"/>
+                                            <input type="text" class="form-control column_filter" id="num" name="num" />
                                         </div>
                                     </div>
                                     <div class="form-group" id="filter_col1" n="1" xwz="3" byz="3">
                                         <label for="school" class="col-sm-3 control-label">学　　校：</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control column_filter" id="school" name="school"/>
+                                            <input type="text" class="form-control column_filter" id="school" name="school" />
                                         </div>
                                     </div>
-                                    <div class="form-group"  id="filter_col2" n="2" xwz="4" byz="4">
+                                    <div class="form-group">
+                                        <label for="certdate" class="col-sm-3 control-label">层　　次：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control column_filter" id="level" name="level" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="filter_col2" n="2" xwz="4" byz="4">
                                         <label for="certdate" class="col-sm-3 control-label">发证日期：</label>
                                         <div class="col-sm-9">
-                                            <input type="date" class="form-control column_filter" id="certdate" name="certdate"/>
+                                            <input type="date" min="2000-01-01" class="form-control column_filter" id="certdate" name="certdate" />
                                         </div>
                                     </div>
                                     <div class="form-group" id="filter_col3" n="3" xwz="8" byz="10">
                                         <label for="school" class="col-sm-3 control-label">专　　业：</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control column_filter" id="major" name="major"/>
+                                            <input type="text" class="form-control column_filter" id="major" name="major" />
                                         </div>
                                     </div>
                                     <div class="form-group" id="filter_col4" n="4" xwz="6" byz="6">
@@ -263,17 +274,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <div class="form-group" id="filter_col5" n="5" xwz="5" byz="5">
                                         <label for="certdate" class="col-sm-3 control-label">姓　　名：</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control column_filter" id="name" name="name"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="certdate" class="col-sm-3 control-label">录入时间：</label>
-                                        <div class="col-sm-3">
-                                            <input type="datetime" class="form-control" id="BeginTime" name="BeginTime" />
-                                        </div>
-                                        <div class="col-sm-1">--</div>
-                                        <div class="col-sm-3">
-                                            <input type="datetime" class="form-control" id="EndTime" name="EndTime" />
+                                            <input type="text" class="form-control column_filter" id="name" name="name" />
                                         </div>
                                     </div>
                                 </div>
@@ -298,293 +299,377 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <h3 class="box-title">统计量</h3>
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
-                                        <i class="fa fa-minus"></i></button>
+                                        <i class="fa fa-minus"></i>
+                                    </button>
                                     <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove">
-                                        <i class="fa fa-times"></i></button>
+                                        <i class="fa fa-times"></i>
+                                    </button>
                                 </div>
                             </div>
                             <div class="box-body">
                                 <table class="table">
                                     <tbody>
                                         <tr>
-                                            <td><label for="search">在结果在搜索：</label></td>
-                                            <td><input type="text" class="form-control global_filter" disabled="disabled" id="global_filter"/></td>
+                                            <td>
+                                                    <label for="singelSearch">单列进行查询：</label>
+                                                </td>
+                                                <td>
+                                                    <div id="first">
+                                                        <select name="filter_f" id="filter_f" class="btn btn-block btn-default column_filter">
+                                                            <option value="" selected="selected">请选择...</option>
+                                                            <option value="4">发证日期</option>
+                                                            <option value="7">出生日期</option>
+                                                            <option value="8">入学日期</option>
+                                                            <option value="9">毕业日期</option>
+                                                        </select>
+                                                    </div>
+                                                    <div id="second">
+                                                            <select name="filter_s" id="filter_s" class="btn btn-block btn-default column_filter">
+                                                                <option value="" selected="selected">请选择...</option>
+                                                                <option value="5">发证日期</option>
+                                                                <option value="8">出生日期</option>
+                                                            </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                <label for="search">在结果在搜索：</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control global_filter" disabled="disabled" id="global_filter" />
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td><label for="count">搜索结果共计：</label></td>
-                                            <td>共<span id="count" name="count">0</span>条记录</td>
+                                            <td>
+                                                <label for="count">搜索结果共计：</label>
+                                            </td>
+                                            <td>共
+                                                <span id="count" name="count">0</span>条记录</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                            <!-- footer -->
+                                <!-- footer -->
                             </div>
                             <!-- /.box-footer-->
                         </div>
                     </div>
-                    
 
-                        <div class="col-md-12 col-xs-12" id="XWZ_result" style="display: none">
-                            <div class="box">
-                                <div class="box-header">
-                                    <h3 class="box-title">查询结果</h3>
-                                </div>
-                                <!-- /.box-header -->
-                                <div class="box-body">
-                                    <table id="XWZ_table" class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>证书编号</th>
-                                                <th>证书类别</th>
-                                                <th>学位</th>
-                                                <th>学校</th>
-                                                <th>发证日期</th>
-                                                <th>姓名</th>
-                                                <th>性别</th>
-                                                <th>生日</th>
-                                                <th>专业</th>
-                                                <th>状态</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="XWZ_body">
-                                        </tbody>
-                                    </table>
-                                </div>
+
+                    <div class="col-md-12 col-xs-12" id="XWZ_result" style="display: none">
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">查询结果</h3>
                             </div>
-                        </div>
-                        <div class="col-md-12 col-xs-12" id="BYZ_result" style="display: none">
-                            <div class="box">
-                                <div class="box-header">
-                                    <h3 class="box-title">查询结果</h3>
-                                </div>
-                                <div class="box-body">
-                                    <table id="BYZ_table" class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>证书编号</th>
-                                                <th>证书类别</th>
-                                                <th>学制</th>
-                                                <th>学校</th>
-                                                <th>发证日期</th>
-                                                <th>姓名</th>
-                                                <th>性别</th>
-                                                <th>生日</th>
-                                                <th>入学日期</th>
-                                                <th>毕业日期</th>
-                                                <th>专业</th>
-                                                <th>层次</th>
-                                                <th>学习形式</th>
-                                                <th>学历类别</th>
-                                                <th>状态</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="BYZ_body">
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="XWZ_table" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>证书编号</th>
+                                            <th>证书类别</th>
+                                            <th>层次</th>
+                                            <th>学位</th>
+                                            <th>学校</th>
+                                            <th>发证日期</th>
+                                            <th>姓名</th>
+                                            <th>性别</th>
+                                            <th>生日</th>
+                                            <th>专业</th>
+                                            <th>状态</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="XWZ_body">
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-            </section>
-            </div>
-            <!-- /.content-wrapper -->
-
-            <!-- Main Footer -->
-            <footer class="main-footer">
-                <!-- To the right -->
-                <div class="pull-right hidden-xs">
-                    Anything you want
+                    <div class="col-md-12 col-xs-12" id="BYZ_result" style="display: none">
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">查询结果</h3>
+                            </div>
+                            <div class="box-body">
+                                <table id="BYZ_table" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>证书编号</th>
+                                            <th>证书类别</th>
+                                            <th>学制</th>
+                                            <th>学校</th>
+                                            <th>发证日期</th>
+                                            <th>姓名</th>
+                                            <th>性别</th>
+                                            <th>生日</th>
+                                            <th>入学日期</th>
+                                            <th>毕业日期</th>
+                                            <th>专业</th>
+                                            <th>层次</th>
+                                            <th>学习形式</th>
+                                            <th>学历类别</th>
+                                            <th>状态</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="BYZ_body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- Default to the left -->
-                <strong>Copyright &copy; 2018
-                    <a href="#">TheRang</a>.</strong> All rights reserved.
-            </footer>
+            </section>
         </div>
-        <!-- ./wrapper -->
+        <!-- /.content-wrapper -->
 
-        <!-- REQUIRED JS SCRIPTS -->
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <!-- To the right -->
+            <div class="pull-right hidden-xs">
+                Anything you want
+            </div>
+            <!-- Default to the left -->
+            <strong>Copyright &copy; 2018
+                <a href="#">TheRang</a>.</strong> All rights reserved.
+        </footer>
+    </div>
+    <!-- ./wrapper -->
 
-        <script src="bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-        <!-- Bootstrap 3.3.7 -->
-        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- DataTables -->
-        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-        <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-        <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-        <!-- SlimScroll -->
-        <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-        <!-- FastClick -->
-        <script src="bower_components/fastclick/lib/fastclick.js"></script>
-        <!-- AdminLTE App -->
-        <script src="dist/js/adminlte.min.js"></script>
-        <!-- AdminLTE for demo purposes -->
-        <script src="bower_components/raphael/raphael.min.js"></script>
-        <script src="bower_components/morris.js/morris.min.js"></script>
-        <script src="dist/js/demo.js"></script>
-        <script>
-            let count = '';
-            var Table ;
-            function filterGlobal (table) {
+    <!-- REQUIRED JS SCRIPTS -->
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="bower_components/raphael/raphael.min.js"></script>
+    <script src="bower_components/morris.js/morris.min.js"></script>
+    <script src="dist/js/demo.js"></script>
+    <script>
+    $('#filter_s').hide();
+        let username = "<%= username %>";
+        let college = "<%=college%>";
+        let role = "<%= role %>";
+        $('#school').val(college);
+        $('#level').val(role);
+        $('#school').attr("disabled", true);
+        $('#level').attr("disabled", true);
+        let count = '';
+        var Table;
+
+      function filterGlobal_f(table) {
+            var filter_f = $('#filter_f').val();
+            if (filter_f != "") {
+                table.columns(filter_f).search(
+                    $('#global_filter').val()).draw();
+            } else {
                 table.search(
-                    $('#global_filter').val()
-                ).draw();
-                var info = table.page.info();
-                var dataRows = info.recordsDisplay;
-                $('#count').text(dataRows);
-            };
-            
-            $('#search').click(function () {
-                $('#XWZ_result').hide();
-                $('#BYZ_result').hide();
-                let num = $('#num').val();
-                let school = $('#school').val();
-                let certdate = $('#certdate').val();
-                let Txtype = $('#Txtype').val();
-                let name = $("#name").val();
-                let major = $("#major").val();
-                let sex = $("#sex").val();
-                let BeginTime = $("#BeginTime").val();
-                let EndTime  = $("#EndTime").val();
-                let txtype = "";
-                switch (Txtype) {
-                    case "BYZ":
-                        txtype = "毕业证书";
-                        break;
-                    case "xs_XWZ":
-                        txtype = "学士学位证书";
-                        break;
-                    case "ss_XWZ":
-                        txtype = "硕士学位证书";
-                        break;
-                    case "bs_XWZ":
-                        txtype = "博士学位证书";
-                        break;
-                    default:
-                        break;
-                }
-                $.ajax({
-                    url: '/rangesearch',
-                    type: 'post',
-                    data: {
-                        num: num,
-                        school: school,
-                        certdate: certdate,
-                        name:name,
-                        major:major,
-                        sex:sex,
-                        BeginTime:BeginTime,
-                        EndTime:EndTime,
-                        txtype: txtype
-                    },
-                    success: function (data) {
-                        console.log(data);
-                        if (data == "未找到") {
-                            alert("未找到！");
-                            $('#count').text("0");
-                        } else {
-                            data = eval('(' + data + ')');
-                            // console.log(data);
-                            let html = '';
-                            var arr = [];
-                            for (let i in data) {
-                                arr.push(data[i]);
-                            }
-                            var count = arr.length;
-                            $('#count').text(count);                            
-                            if (Txtype == "xs_XWZ" || Txtype == "ss_XWZ" || Txtype == "bs_XWZ") {
-                                var XWZ_table = $('#XWZ_table').DataTable();
-                                if (XWZ_table) {
-                                    XWZ_table.clear();
-                                    XWZ_table.destroy();
-                                }
-                                $.each(arr, function (i, item) {
-                                    // console.log(i,item);
-                                    //学位证书
-                                    html += '<tr>'+
-                                        '<td id="tds">' + item.num + '</td>' +
-                                        '<td id="tds">' + item.txtype + '</td>' +
-                                        '<td id="tds">' + item.degree + '</td>' +
-                                        '<td id="tds">' + item.school + '</td>' +
-                                        '<td id="tds">' + item.certdate + '</td>' +
-                                        '<td id="tds">' + item.name + '</td>' +
-                                        '<td id="tds">' + item.sex + '</td>' +
-                                        '<td id="tds">' + item.birthday + '</td>' +
-                                        '<td id="tds">' + item.major + '</td>';
-                                    if (item.status) {
-                                        html += '<td id="tds">' + item.status + '</td>';
-                                    } else {
-                                        html +=
-                                            '<td id="tds"><i class="fa fa-fw fa-check"></i></td>';
-                                    }
-                                    html += '</tr>';
+                    $('#global_filter').val()).draw();
+            }
+            var info = table.page.info();
+            var dataRows = info.recordsDisplay;
+            $('#count').text(dataRows);
+        };
+        function filterGlobal_s(table) {
+            var filter_s = $('#filter_s').val();
+            if (filter_s != "") {
+                table.columns(filter_s).search(
+                    $('#global_filter').val()).draw();
+            } else {
+                table.search(
+                    $('#global_filter').val()).draw();
+            }
+            var info = table.page.info();
+            var dataRows = info.recordsDisplay;
+            $('#count').text(dataRows);
+        };
 
-                                });
-                                $('#XWZ_body').append(html);
-                                $('#XWZ_table').DataTable();
-                                $('#XWZ_result').show();
-                                Table = $('#XWZ_table').DataTable();
-                            } else {
-                                var BYZ_table = $('#BYZ_table').DataTable();
-                                if (BYZ_table) {
-                                    BYZ_table.clear();
-                                    BYZ_table.destroy();
-                                }
+        $('#Txtype').on("change", function () {
+            $("#global_filter").val("");
+            if($('#Txtype').val() == 'BYZ'){
+                $('#filter_s').hide();
+                $('#filter_f').show();
+                $('#filter_s').val("");
 
-                                $.each(arr, function (i, item) {
-                                    // console.log(i, item);
-                                    //毕业证书
-                                    html += '<tr>'+
-                                        '<td id="tds">' + item.num + '</td>' +
-                                        '<td id="tds">' + item.txtype + '</td>' +
-                                        '<td id="tds">' + item.schoolsystem + '</td>' +
-                                        '<td id="tds">' + item.school + '</td>' +
-                                        '<td id="tds">' + item.certdate + '</td>' +
-                                        '<td id="tds">' + item.name + '</td>' +
-                                        '<td id="tds">' + item.sex + '</td>' +
-                                        '<td id="tds">' + item.birthday + '</td>' +
-                                        '<td id="tds">' + item.begin + '</td>' +
-                                        '<td id="tds">' + item.end + '</td>' +
-                                        '<td id="tds">' + item.major + '</td>' +
-                                        '<td id="tds">' + item.level + '</td>' +
-                                        '<td id="tds">' + item.form + '</td>' +
-                                        '<td id="tds">' + item.class + '</td>';
-                                    if (item.status) {
-                                        html += '<td id="tds">' + item.status + '</td>';
-                                    } else {
-                                        html +=
-                                            '<td id="tds"><i class="fa fa-fw fa-check"></i></td>';
-                                    }
-                                    html += '</tr>';
 
-                                });
-                                $('#BYZ_body').append(html);
-                                $('#BYZ_table').DataTable();
-                                $('#BYZ_result').show();
-                                Table = $('#BYZ_table').DataTable();
-                                // console.log(Table);
-                                // console.log($('#BYZ_table').DataTable());
-                            }
-                            
-                            $('input.global_filter').attr("disabled",false);
+
+            }
+            else{
+                $('#filter_f').hide();
+                $('#filter_s').show();
+                $('#filter_f').val("");
+            }
+        });
+
+         $('#filter_s,#filter_f').on("change", function () {
+            $("#global_filter").val("");});
+
+        $('#search').click(function () {      
+            $('#XWZ_result').hide();
+            $('#BYZ_result').hide();
+            let num = $('#num').val();
+            let school = $('#school').val();
+            let certdate = $('#certdate').val();
+            let Txtype = $('#Txtype').val();
+            let level = $("#level").val();
+            let name = $("#name").val();
+            let major = $("#major").val();
+            let sex = $("#sex").val();
+            let BeginTime = $("#BeginTime").val();
+            let EndTime = $("#EndTime").val();
+            let txtype = "";
+            switch (Txtype) {
+                case "BYZ":
+                    txtype = "毕业证书";
+                    break;
+                case "XWZ":
+                    {
+                        if (role == "本科") {
+                            txtype = "学士学位证书";
+                        } else if (role == "硕士") {
+                            txtype = "硕士学位证书";
+                        } else if (role == "博士") {
+                            txtype = "博士学位证书";
                         }
-                        
-                        
-                    },
-                    error: function (e) {
-                        alert("未连接到服务器!");
+                        break;
+                    }
+                default:
+                    break;
+            };
+            $.ajax({
+                url: '/rangesearch',
+                type: 'post',
+                data: {
+                    num: num,
+                    school: school,
+                    certdate: certdate,
+                    name: name,
+                    level: level,
+                    major: major,
+                    sex: sex,
+                    BeginTime: BeginTime,
+                    EndTime: EndTime,
+                    txtype: txtype
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data == "未找到") {
+                        alert("未找到！");
+                        $('#count').text("0");
+                    } else {
+                        data = eval('(' + data + ')');
+                        // console.log(data);
+                        let html = '';
+                        var arr = [];
+                        for (let i in data) {
+                            arr.push(data[i]);
+                        }
+                        var count = arr.length;
+                        $('#count').text(count);
+                        if (Txtype == "XWZ") {
+                            var XWZ_table = $('#XWZ_table').DataTable();
+                            if (XWZ_table) {
+                                XWZ_table.clear();
+                                XWZ_table.destroy();
+                            }
+                            $.each(arr, function (i, item) {
+                                // console.log(i,item);
+                                //学位证书
+                                html += '<tr>' +
+                                    '<td id="tds">' + item.num + '</td>' +
+                                    '<td id="tds">' + item.txtype + '</td>' +
+                                    '<td id="tds">' + item.level + '</td>' +
+                                    '<td id="tds">' + item.degree + '</td>' +
+                                    '<td id="tds">' + item.school + '</td>' +
+                                    '<td id="tds">' + item.certdate + '</td>' +
+                                    '<td id="tds">' + item.name + '</td>' +
+                                    '<td id="tds">' + item.sex + '</td>' +
+                                    '<td id="tds">' + item.birthday + '</td>' +
+                                    '<td id="tds">' + item.major + '</td>';
+                                if (item.status) {
+                                    html += '<td id="tds">' + item.status + '</td>';
+                                } else {
+                                    html +=
+                                        '<td id="tds"><i class="fa fa-fw fa-check"></i></td>';
+                                }
+                                html += '</tr>';
+                            });
+                            $('#XWZ_body').append(html);
+                            $('#XWZ_table').DataTable();
+                            $('#XWZ_result').show();
+                            Table = $('#XWZ_table').DataTable();
+                        } else {
+                            var BYZ_table = $('#BYZ_table').DataTable();
+                            if (BYZ_table) {
+                                BYZ_table.clear();
+                                BYZ_table.destroy();
+                            }
+                            $.each(arr, function (i, item) {
+                                // console.log(i, item);
+                                //毕业证书
+                                html += '<tr>' +
+                                    '<td id="tds">' + item.num + '</td>' +
+                                    '<td id="tds">' + item.txtype + '</td>' +
+                                    '<td id="tds">' + item.schoolsystem + '</td>' +
+                                    '<td id="tds">' + item.school + '</td>' +
+                                    '<td id="tds">' + item.certdate + '</td>' +
+                                    '<td id="tds">' + item.name + '</td>' +
+                                    '<td id="tds">' + item.sex + '</td>' +
+                                    '<td id="tds">' + item.birthday + '</td>' +
+                                    '<td id="tds">' + item.begin + '</td>' +
+                                    '<td id="tds">' + item.end + '</td>' +
+                                    '<td id="tds">' + item.major + '</td>' +
+                                    '<td id="tds">' + item.level + '</td>' +
+                                    '<td id="tds">' + item.form + '</td>' +
+                                    '<td id="tds">' + item.class + '</td>';
+                                if (item.status) {
+                                    html += '<td id="tds">' + item.status + '</td>';
+                                } else {
+                                    html +=
+                                        '<td id="tds"><i class="fa fa-fw fa-check"></i></td>';
+                                }
+                                html += '</tr>';
+                            });
+                            $('#BYZ_body').append(html);
+                            $('#BYZ_table').DataTable();
+                            $('#BYZ_result').show();
+                            Table = $('#BYZ_table').DataTable();
+                            // console.log(Table);
+                            // console.log($('#BYZ_table').DataTable());
+                        }
+
+                        $('input.global_filter').attr("disabled", false);
                     }
 
-                });
-            });
 
-            $('input.global_filter').on( 'keyup click', function () {
-                filterGlobal(Table);             
-            });
+                },
+                error: function (e) {
+                    alert("未连接到服务器!");
+                }
 
-        </script>
+            });
+        });
+
+        $('input.global_filter').on('keyup click', function () {
+            if($('#Txtype').val() == 'BYZ'){
+            filterGlobal_f(Table);}
+            else
+            filterGlobal_s(Table);
+        });
+    </script>
 </body>
 
 </html>

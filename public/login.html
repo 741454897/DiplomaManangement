@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=chrome">
-    <title><%= title %></title>
+    <title>
+        <%= title %>
+    </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -16,72 +19,138 @@
     <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
+    <link rel="stylesheet" href="dist/css/mycss.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 
     <!-- Google Font -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-</head>
-<body class="hold-transition login-page">
-<div class="login-box">
-    <div class="login-logo">
-        <a href="total.html"><b>证书</b>认证系统</a>
-    </div>
-    <!-- /.login-logo -->
-    <div class="login-box-body">
-        <p class="login-box-msg">登录开始你的会话</p>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <style>
+        .container {
+            width: 310px;
+            margin: auto;
+            padding: 0px;
+        }
 
-        <form action="/login" method="post">
-            <div class="form-group has-feedback">
-                <input type="text" class="form-control" name="username" id="username" placeholder="用户名">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <input type="password" class="form-control" name="password" id="password" placeholder="密码">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
-            <div class="row">
-                <!-- /.col -->
-                <div class="col-xs-8">
+        input {
+            display: block;
+            width: 290px;
+            line-height: 40px;
+            margin: 10px 0;
+            padding: 0 10px;
+            outline: none;
+            border: 1px solid #c8cccf;
+            border-radius: 4px;
+            color: #6a6f77;
+        }
+
+        #msg {
+            width: 100%;
+            line-height: 40px;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="total.html">
+                <b>证书</b>认证系统</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">登录开始你的会话</p>
+
+            <form action="/login" method="post" id="login_form">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" name="username" id="username" placeholder="用户名">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
+                <div class="form-group has-feedback">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="密码">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <!-- /.col -->
+                    <div class="col-xs-8">
+                    </div>
+                    <div class="form-group has-feedback" disabled="disabled">
+                        <label for="verifyslider" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-8">
+                            <div class="container">
+                                <div id="verifyslider" style="position: relative"></div>
+                                <div id="msg" class="msg" style="margin-bottom: 15px;"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- <div class="row">
+                <! /.col -->
+                <!-- <div class="col-xs-8">
+                </div>
+
                 <div class="col-xs-4">
                     <button type="submit" id="login" class="btn btn-primary btn-block btn-flat">登录</button>
-                </div>
+                </div> -->
                 <!-- /.col -->
-            </div>
-        </form>
-        <!-- /.social-auth-links -->   
-        <!-- <a href="register.html" target="_blank" class="text-center">注册一个新用户></a> -->
-        <a href="/register" target="_blank" class="text-center">注册一个新用户></a>
+                <!-- </div> -->
+            </form>
+            <a href="/register" target="_blank" class="text-center">注册一个新用户></a>
 
 
+        </div>
+        <!-- /.login-box-body -->
     </div>
-    <!-- /.login-box-body -->
-</div>
-<!-- /.login-box -->
+    <!-- /.login-box -->
 
-<!-- jQuery 3 -->
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- iCheck -->
-<script src="plugins/iCheck/icheck.min.js"></script>
-<script>
-    var mess = "<%= messages %>";
-    if (mess){
-        alert(mess);
-    }
-    $(function () {
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%' /* optional */
+    <!-- jQuery 3 -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script src="plugins/iCheck/icheck.min.js"></script>
+    <script src="dist/js/verify.js"></script>
+
+    <script>
+        var mess = "<%= messages %>";
+
+        if (mess) {
+            alert(mess);
+        }
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' /* optional */
+            });
         });
-    });
-    
-</script>
+
+        var cleanMsg = function () {
+            document.getElementById('msg').innerHTML = '';
+        }
+        VerifySlider.init({
+            el: document.getElementById('verifyslider'),
+            onSuccess: function () {
+                document.getElementById('msg').innerHTML = '验证成功！';
+                $('#msg').css("color", "green");
+                var form = document.getElementById('login_form');
+                form.submit();
+            },
+            onFail: function () {
+                document.getElementById('msg').innerHTML = '验证失败，请重试！';
+                $('#msg').css("color", "red");
+
+            },
+            onRefresh: cleanMsg
+        })
+
+    </script>
 
 </body>
+
 </html>

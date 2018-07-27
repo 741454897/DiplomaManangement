@@ -21,21 +21,21 @@ exports.login = function (req, res, next) {
     let college = req.body.college;
     let role = req.body.role;
 
-    var timestamp = Date.now();//获取当前时间戳
+    var timestamp = Date.now(); //获取当前时间戳
     //剩余次数和时间戳
     var user_info = {
         "num": 10,
-        "timestamp" : timestamp
+        "timestamp": timestamp
     };
-    if(user_list[username]){//已存在
+    if (user_list[username]) { //已存在
         var old_timestamp = user_list[username].timestamp;
-        if(user_list[username].num == 0 && (new Date(timestamp).toDateString() == new Date(old_timestamp).toDateString())){
+        if (user_list[username].num == 0 && (new Date(timestamp).toDateString() == new Date(old_timestamp).toDateString())) {
             return res.render('login', {
                 title: 'Login',
                 messages: ('今日剩余次数为0，请明日再试！')
             });
         }
-    }else{
+    } else {
         user_list[username] = user_info;
     }
     (async () => {
@@ -74,13 +74,13 @@ exports.login = function (req, res, next) {
                     var num = user_list[username].num;
                     user_info = {
                         "num": num - 1,
-                        "timestamp" : timestamp
+                        "timestamp": timestamp
                     };
                     user_list[username] = user_info;
                     var times = user_list[username].num;
                     return res.render('login', {
                         title: 'Login',
-                        messages:  '无效的用户名或密码错误!'
+                        messages: '无效的用户名或密码错误!'
                     });
                 }
             }
@@ -98,7 +98,7 @@ exports.login = function (req, res, next) {
 
 exports.logout = function (req, res, next) {
     let username = req.session.username;
-    
+
     delete fc_list[username];
     req.session.destroy();
     return res.render('total', {
@@ -193,10 +193,16 @@ exports.getMyTxHistory = function (req, res) {
     (async () => {
         try {
             let fc = fc_list[username];
-
-            let mytxall = await fc.mytxall();//所有交易
-
+            //let mytx = await eval('fc.mytx()');
+            //注意，函数mytx要遍历整条链，如果超过1000个区块，页面就挂了，可能超过10秒
+            //相同页面上已经调用过一次
+            //建议页面上用一个进度条显示进度，然后用session保存一个数组mytx，以后每次购买完成之后都mytx.push(新交易)
+            //用增量更新来避免完整更新，以改善性能
+            let mytx = await fc.mytx();
+            //for (let i = 0; i < mytx.length; i++) { //每个交易
+            //    let tx = mytx[i];
             for (let tx of mytx) {
+                //let now_txid = tx['tx_id'];
                 let now_txid = tx.tx_id;
                 //let writeset = tx['writeset'];
                 let writeset = tx.writeset;
@@ -376,10 +382,9 @@ exports.remove = function (req, res, next) {
             // console.log(msg);
             if (!curtx) {
                 res.write('无此证书！');
-            }else if(eval('(' + curtx + ')').school!==college||eval('(' + curtx + ')').level!==role){
+            } else if (eval('(' + curtx + ')').school !== college || eval('(' + curtx + ')').level !== role) {
                 res.write('您没有撤销该证书的权限！');
-            } 
-            else if (eval('(' + curtx + ')').status) {
+            } else if (eval('(' + curtx + ')').status) {
                 res.write('该证书已被撤销！');
             } else {
                 let result = JSON.parse(curtx);
@@ -404,7 +409,6 @@ exports.getCert = function (req, res, next) {
     let num = req.body.num;
     let Txtype = req.body.txtype;
     let cmd = 'fc.' + req.body.cmd;
-    console.log(cmd);
     // console.log('num=', num);
     // console.log('txtype=', Txtype);
     (async () => {
@@ -415,7 +419,8 @@ exports.getCert = function (req, res, next) {
                 fc_list['admin'] = fc;
             }
 
-            if(cmd){
+
+            if(cmd != 'fc.undefined'){
                 var ret = await eval(cmd);
                 if (ret !== undefined) {
                     res.write(ret);
@@ -424,7 +429,6 @@ exports.getCert = function (req, res, next) {
                 res.end();
 
             }else{
-
             var key = Txtype + num;
             console.log(key);
             let re = await fc.query("get", key);
@@ -474,7 +478,6 @@ exports.getCert = function (req, res, next) {
                 messages: re,
                 pic_src: pic_src
             });
-            //else
         }
         } catch (err) {
             console.log("Fabric连接出错或执行出错", err);
@@ -485,8 +488,7 @@ exports.getCert = function (req, res, next) {
 
 exports.rangesearch = function (req, res, next) { //模糊查询
     var username = req.session.username;
-    let college = req.session.college;
-    let role = req.session.role;
+    
     console.log("username=" + username);
     if (username === null) {
         return res.render('login', {
@@ -494,12 +496,12 @@ exports.rangesearch = function (req, res, next) { //模糊查询
             messages: '请先登录!'
         });
     }
-
     (async () => {
         try {
             let fc = fc_list[username];
             let num = req.body.num;
             let school = req.body.school;
+            let level=req.body.level;
             let certdate = req.body.certdate;
             let name = req.body.name;
             let major = req.body.major;
@@ -507,15 +509,12 @@ exports.rangesearch = function (req, res, next) { //模糊查询
             let sex = req.body.sex;
             console.log(txtype);
             let filter = []
-
-            filter.push({
-                school: college
-            });
-
-            filter.push({
-                level: role
-            })
-
+            // filter.push({
+            //     school: college
+            // });
+            // filter.push({
+            //     level: role
+            // })
             if (txtype !== "") {
                 filter.push({
                     txtype: txtype
@@ -529,6 +528,11 @@ exports.rangesearch = function (req, res, next) { //模糊查询
             if (school !== "") {
                 filter.push({
                     school: school
+                })
+            }
+            if (level !== "") {
+                filter.push({
+                    level: level
                 })
             }
             if (certdate !== "") {
@@ -551,7 +555,6 @@ exports.rangesearch = function (req, res, next) { //模糊查询
                     sex: sex
                 })
             }
-
             console.log(filter);
             //怎么实现组合查询？
             let selector1 = {

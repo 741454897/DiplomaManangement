@@ -133,7 +133,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li class="active">
-                                <a href="/history">查询历史</a>
+                                <a href="/history">历史查询</a>
                             </li>
                             <li>
                                 <a href="/onemodify">单项修改</a>
@@ -150,6 +150,12 @@
                         <a href="/count">
                             <i class="fa fa-link"></i>
                             <span>模糊查询</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/demo">
+                            <i class="fa fa-link"></i>
+                            <span>操作历史</span>
                         </a>
                     </li>
                     <li>
@@ -284,12 +290,6 @@
             let key = Txtype + num;
             let cmd = 'query("history","' + key + '")';
             console.log(cmd);
-
-            // var his_table = $('#his_table').Table();
-            // if (his_table) {
-            //     his_table.clear();
-            //     his_table.destroy();
-            // }
             $.ajax({
                 url: '/api',
                 type: 'post',
@@ -299,10 +299,10 @@
                 success: function (data) {
                     data = eval('(' + data + ')');
                     console.log(data);
-                    if (data == []) {
-                        html0 = '<tr><td>查无此证！</td></tr>';
+                    if (data.length == 0) {
+                        html0 = '<tr><th>查无此证！</th></tr>';
                     } else {
-                        let html0 = '';
+                        // let html0 = '';
                         let html = '';
                         let tx = [];
                         for (let k = 0; k < data.length; k++) {
@@ -315,16 +315,14 @@
                             count = k + 1;
                         }
                         console.log(count);
-                        
-                        // $.each(tx, function (i, item) {
                         for (let i in tx) {
                             var a = Number(i) + 1;
                             let item = tx[i];
                             console.log(item);
                             if (item.value.school == college && item.value.level == role) {
                                 if (item.value.num.length === 18) {
-                                    html += '<tr><td id="tds">' + a + '</td></tr>' +
-                                        '<tr><th>操作时间：</th>' +
+                                    html = '<tr><td id="tds">第' + a + '次操作</td>' +
+                                        '<th>操作时间：</th>' +
                                         '<td>' + item.timestamp + '</td></tr>' +
                                         '<tr> <th> 姓名 ：</th>' +
                                         '<td>' + item.value.name + '</td>' +
@@ -353,8 +351,8 @@
                                         '<tr><th> 发证日期： </th>' +
                                         '<td>' + item.value.certdate + '</td></tr>';
                                 } else {
-                                    html += '<tr><td id="tds">' + a + '</td></tr>' +
-                                        '<tr><th>操作时间：</th>' +
+                                    html = '<tr><td id="tds">第' + a + '次操作</td>' +
+                                        '<th>操作时间：</th>' +
                                         '<td>' + item.timestamp + '</td></tr>' +
                                         '<tr> <th> 姓名 ：</th>' +
                                         '<td>' + item.value.name + '</td>' +
@@ -376,23 +374,25 @@
                                         '<td>' + item.value.certdate + '</td>' +
                                         '<th > 层次： </th>' +
                                         '<td>' + item.value.level + '</td></tr>';
-                                    if (item.value.status) {
-                                        html += '<tr><td>该证书已被撤销！</td></tr>' +
-                                            '<tr><td> 撤销原因为：</td></tr>' +
-                                            '<td>' + item.value.reason +
+                                }
+                                if (item.value.status) {
+                                        html += '<tr><td>该证书已被撤销！</td>' +
+                                            '<th> 撤销原因为：</th><td>' + item.value.reason +
                                             '</td></tr>'
                                     }
-                                }
-                                html0 = '<tr><th>共找到' + count + '条记录</th></tr>';
-                            }else{
-                                html0='<tr><th>该查询结果不在您查询权限内！</th></tr>';
+                                $('#list').append(html);
+                            } else {
+                                html0 = '<tr><th>该查询结果不在您查询权限内！</th></tr>';
+                                let html = '';
                             }
+                            html0 = '<tr><th>共找到' + count + '条记录</th></tr>';
                         }
-                        $('#count').append(html0);
-                        $('#list').append(html);
-                        // $('#his_table').DataTable();
-                        $('#result').show();
-                    };
+                    }
+                    console.log(html0);
+                    $('#count').append(html0);
+                    // $('#list').append(html);
+                    $('#result').show();
+                    // $('#count').append(html0);
                 },
                 error: function (e) {
                     alert('server error!');

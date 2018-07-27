@@ -131,6 +131,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <li class="header">目 录</li>
                 <!-- Optionally, you can add icons to the links -->
                 <li><a href="/total"><i class="fa fa-link"></i> <span>主界面</span></a></li>
+                <li class="active"><a href="/total2"><i class="fa fa-link"></i> <span>个人查证</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
@@ -268,21 +269,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
             var sex = $('#sex').val();
             var birthday = $('#birthday').val();
 
-            let selector1 = {
-                selector: {
-                    $and: [
-                        {
-                            name: name
-                        },
-                        {
-                            sex: sex
-                        },
-                        {
-                            birthday: birthday
-                        }
-                    ]
+            console.log(name);
+            console.log(sex);
+            console.log(birthday);
+
+            if(name && sex && birthday){
+                let selector1 = {
+                    selector: {
+                        $and: [
+                            {
+                                name: name
+                            },
+                            {
+                                sex: sex
+                            },
+                            {
+                                birthday: birthday
+                            }
+                        ]
+                    }
                 }
-            }
             let cmd = 'query("selectBy",\''+JSON.stringify(selector1) + '\')';
             console.log(cmd);
             
@@ -322,6 +328,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     alert('server error!');
                 }
             });
+            }else{
+                alert("请输入正确的信息");
+            }
+
+            
         },
         onFail: function() {
             document.getElementById('msg').innerHTML = '验证失败，请重试！';

@@ -40,7 +40,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             color: red;
             font-weight: normal;
 
-        };
+        }
+
+        ;
     </style>
 </head>
 
@@ -168,6 +170,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </a>
                     </li>
                     <li>
+                        <a href="/demo">
+                            <i class="fa fa-link"></i>
+                            <span>操作历史</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="/revoke">
                             <i class="fa fa-link"></i>
                             <span>撤销</span>
@@ -239,7 +247,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <label for="txtype">证书类别：</label>
                                             </td>
                                             <td>
-                                                <select class="btn btn-default" id="txtype" name="txtype">
+                                                <select class="btn btn-default txtype">
                                                     <option value="学士学位证书">学士学位证书</option>
                                                     <option value="硕士学位证书">硕士学位证书</option>
                                                     <option value="博士学位证书">博士学位证书</option>
@@ -321,7 +329,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <label for="level">层　　次：</label>
                                             </td>
                                             <td>
-                                                <select class="btn btn-default level">
+                                                <select class="btn btn-default" id="levelXWZ">
                                                     <option value="本科">本科</option>
                                                     <option value="硕士">硕士</option>
                                                     <option value="博士">博士</option>
@@ -438,7 +446,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <label for="level">层　　次：</label>
                                             </td>
                                             <td>
-                                                <select class="btn btn-default level">
+                                                <select class="btn btn-default" id="levelBYZ">
                                                     <option value="本科">本科</option>
                                                     <option value="大专">大专</option>
                                                     <option value="硕士">硕士</option>
@@ -529,15 +537,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
         let username = "<%= username %>";
         let college = "<%=college%>";
         let role = "<%= role %>";
-        $('#search').click(function () {
+        $('#search').click(function (){
+            if ($('#num').val().length != 18 && $('#Txtype').val() == "BYZ") {
+                alert("请输入正确的证书编号！");
+                return;
+            }
+            if ($('#num').val().length != 16 && $('#Txtype').val() == "XWZ") {
+                alert("请输入正确的证书编号！");
+                return;
+            }
             let Txtype = $('#Txtype').val();
             let num = $('#num').val();
             let key = Txtype + num;
             let cmd = 'query("get","' + key + '")';
             console.log(cmd);
-            $('.msg').hide();
-            $('#Btn').hide();
-            $('#modify').attr("disabled", false);
             $.ajax({
                 url: '/api',
                 type: 'post',
@@ -545,10 +558,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     cmd: cmd
                 },
                 success: function (data) {
-                    
+                    data = eval('(' + data + ')');
                     console.log(data)
                     if (data) {
-                        data = eval('(' + data + ')');
                         $('#Btn').show();
                         // data = JSON.parse(data);
                         console.log(data);
@@ -561,11 +573,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         $(".sex").val(data.sex);
                         $(".birthday").val(data.birthday);
                         $(".major").val(data.major);
-                        $('.level').val(data.level);
                         //毕业证
-                        if (Txtype == "BYZ") {
+                        if (Txtype == "BYZ"){
                             $('#begin').val(data.begin);
                             $('#end').val(data.end);
+                            $('#levelBYZ').val(data.level);
                             $('#class').val(data.class);
                             $('#form').val(data.form);
                             $("#schoolsystem").val(data.schoolsystem);
@@ -573,6 +585,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             $('#XWZ_body').hide();
                         } else { //学位证
                             $('#degree').val(data.degree);
+                            $('#levelXWZ').val(data.level);
                             $('#XWZ_body').show();
                             $('#BYZ_body').hide();
                         }
@@ -584,13 +597,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         $('.reason').attr("disabled", true);
                         $('.txtype').attr("disabled", true);
                         $('.school').attr("disabled", true);
-                        $('.level').attr("disabled", true);
-                        if ($('.school').val() !== college || $('.level').val() !== role) {
+                        $('#levelXWZ').attr("disabled", true);   
+                        $('#levelBYZ').attr("disabled", true);                  
+                        if (data.school !== college || data.level !== role) {
+                            $('#modify').attr("disabled",false);
                             $('.num').attr("disabled", true);
                             $('.name').attr("disabled", true);
                             $('.sex').attr("disabled", true);
                             $('.birthday').attr("disabled", true);
                             $('.major').attr("disabled", true);
+                            $('.certdate').attr("disabled", true);
                             if (Txtype == "BYZ") {
                                 $('#begin').attr("disabled", true);
                                 $('#end').attr("disabled", true);
@@ -620,43 +636,40 @@ scratch. This page gets rid of all links and provides the needed markup only.
             $('#Btn').hide();
 
         });
-
         var flag = true;
         // //检查日期正则表达式
         // var regex = new RegExp(
         //     /^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$/
         // );
         //失去焦点事件
-        $('#BYZ_body .num').blur(function () {
-            if ($('#BYZ_body .num').val().length != 18) {
+        $('#BYZ_body .num').blur(function(){
+            if($('#BYZ_body .num').val().length != 18){
                 flag = false;
                 $(this).parent().find($('.msg')).show();
-            } else {
+            }else{
                 flag = true;
                 $(this).parent().find($('.msg')).hide();
             }
-            if (!flag) {
-                $('#modify').attr("disabled", true);
-            } else {
-                $('#modify').attr("disabled", false);
+            if(!flag){
+                $('#modify').attr("disabled",true);
+            }else{
+                $('#modify').attr("disabled",false);
             }
         })
-
-        $('#XWZ_body .num').blur(function () {
-            if ($('#XWZ_body .num').val().length != 16) {
+        $('#XWZ_body .num').blur(function(){
+            if($('#XWZ_body .num').val().length != 16){
                 flag = false;
                 $(this).parent().find($('.msg')).show();
-            } else {
+            }else{
                 flag = true;
                 $(this).parent().find($('.msg')).hide();
             }
-            if (!flag) {
-                $('#modify').attr("disabled", true);
-            } else {
-                $('#modify').attr("disabled", false);
+            if(!flag){
+                $('#modify').attr("disabled",true);
+            }else{
+                $('#modify').attr("disabled",false);
             }
         })
-
         $('.school, .certdate, .name, .birthday, .major, #begin, #end, #class').blur(function(){
             if(!$(this).val()){
                 flag = false;
@@ -671,13 +684,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 $('#modify').attr("disabled",false);
             }
         })
-
-
-
+       
         $('#modify').click(function () {
             //毕业证
             if ($('#Txtype').val() == "BYZ") {
-
                 var num = $('#BYZ_body .num').val();
                 var school = $('#BYZ_body .school').val();
                 var certdate = $('#BYZ_body .certdate').val();
@@ -688,13 +698,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 var txtype = $('#BYZ_body .txtype').val();
                 var begin = $('#begin').val();
                 var end = $('#end').val();
-                var level = $('#BYZ_body.level').val();
+                var level = $('#levelBYZ').val();
                 var classes = $('#class').val(); //用class会报错
                 var form = $('#form').val();
                 var schoolsystem = $("#schoolsystem").val();
-                console.log(sex);
+                
             } else { //学位证
-
                 var num = $('#XWZ_body .num').val();
                 var school = $('#XWZ_body .school').val();
                 var certdate = $('#XWZ_body .certdate').val();
@@ -703,9 +712,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 var birthday = $('#XWZ_body .birthday').val();
                 var major = $('#XWZ_body .major').val();
                 var txtype = $('#XWZ_body .txtype').val();
-                var level = $('#XWZ_body .level').val();
+                var level = $('#levelXWZ').val();
                 var degree = $('#degree').val();
             };
+            console.log(level);
             if ($('.status').val()) {
                 var status = $('.status').val();
                 var reason = $('.reason').val();
@@ -730,10 +740,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 status: status,
                 reason: reason
             }
-
+            console.log(jsonobj.level);
             var cmd = 'invoke("put","' + key + '",\'' + JSON.stringify(jsonobj) + '\')';
             console.log(cmd);
-
             $.ajax({
                 url: '/api',
                 type: 'post',
@@ -742,9 +751,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 },
                 success: function (data) {
                     alert("修改成功！");
+                    $('#BYZ_body').hide();
+                    $('#XWZ_body').hide();
                 },
                 error: function (e) {
                     alert('server error!');
+                    $('#BYZ_body').hide();
+                    $('#XWZ_body').hide();
                 }
             });
         });

@@ -4,10 +4,13 @@ This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=chrome">
-    <title><%=title%></title>
+    <title>
+        <%=title%>
+    </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -31,10 +34,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <style>
-
         .container {
             width: 310px;
-            margin:auto;
+            margin: auto;
             padding: 0px;
         }
 
@@ -46,231 +48,259 @@ scratch. This page gets rid of all links and provides the needed markup only.
         }
     </style>
 </head>
+
 <body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+    <div class="wrapper">
 
-    <!-- Main Header -->
-    <header class="main-header">
+        <!-- Main Header -->
+        <header class="main-header">
 
-        <!-- Logo -->
-        <a href="/total" class="logo">
-            <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>F</b>NC</span>
-            <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>证书认证系统</b></span>
-        </a>
-
-        <!-- Header Navbar -->
-        <nav class="navbar navbar-static-top" role="navigation">
-            <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                <span class="sr-only">Toggle navigation</span>
+            <!-- Logo -->
+            <a href="/total" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini">
+                    <b>F</b>NC</span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg">
+                    <b>证书认证系统</b>
+                </span>
             </a>
-            <!-- Navbar Right Menu -->
-            <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
-                    <!-- User Account Menu -->
-                    <li class="dropdown user user-menu">
-                        <!-- Menu Toggle Button -->
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <!-- The user image in the navbar-->
-                            <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs">游客</span>
+
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- User Account Menu -->
+                        <li class="dropdown user user-menu">
+                            <!-- Menu Toggle Button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <!-- The user image in the navbar-->
+                                <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                <span class="hidden-xs">游客</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- The user image in the menu -->
+                                <li class="user-header">
+                                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                    <p>
+                                        游客
+                                        <!--<small>Member since Nov. 2012</small>-->
+                                    </p>
+                                </li>
+                                <!-- Menu Body -->
+                                <li class="user-body">
+                                    <!-- /.row -->
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-right-container">
+                                        <!-- <a herf="/changePwd" class="btn btn-default btn-flat" style="float: left;">修改密码</a> -->
+                                        <a href="#" class="btn btn-default btn-flat" style="float: left;">用户登录</a>
+                                        <!-- <button type="button" class="btn btn-default btn-flat" id="change" name="change" style="float: left;">修改密码</button> -->
+                                    </div>
+                                    <div class="pull-right-container">
+                                        <a href="/login" class="btn btn-primary btn-flat" style="float: right;">管理员登录</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- Control Sidebar Toggle Button -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="pull-left info">
+                        <p>游客</p>
+                        <!-- Status -->
+                        <a href="#">
+                            <i class="fa fa-circle text-success"></i> 用户</a>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">目 录</li>
+                    <!-- Optionally, you can add icons to the links -->
+                    <li>
+                        <a href="/total">
+                            <i class="fa fa-link"></i>
+                            <span>主界面</span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <!-- The user image in the menu -->
-                            <li class="user-header">
-                                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                                <p>
-                                    游客
-                                    <!--<small>Member since Nov. 2012</small>-->
-                                </p>
-                            </li>
-                            <!-- Menu Body -->
-                            <li class="user-body">
-                                <!-- /.row -->
-                            </li>
-                            <!-- Menu Footer-->
-                            <li class="user-footer">
-                                <div class="pull-right-container">
-                                    <a href="#" class="btn btn-default btn-flat" style="float: left;">用户登录</a>
-                                    <!-- <button type="button" class="btn btn-default btn-flat" id="change" name="change" style="float: left;">修改密码</button> -->
-                                </div>
-                                <div class="pull-right-container">
-                                    <a href="/login" class="btn btn-primary btn-flat" style="float: right;">管理员登录</a>
-                                </div>
-                            </li>
-                        </ul>
                     </li>
-                    <!-- Control Sidebar Toggle Button -->
+                    <li>
+                        <a href="/total2">
+                            <i class="fa fa-link"></i>
+                            <span>个人查询</span>
+                        </a>
+                    </li>
                 </ul>
-            </div>
-        </nav>
-    </header>
-    <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar">
+                <!-- /.sidebar-menu -->
+            </section>
+            <!-- /.sidebar -->
+        </aside>
 
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    证书查询
+                    <small>输入证书编号及姓名进行查询。</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-dashboard"></i>主页</a>
+                    </li>
+                    <li class="active">证书查询</li>
+                </ol>
+            </section>
 
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel">
-                <div class="pull-left image">
-                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                </div>
-                <div class="pull-left info">
-                    <p>游客</p>
-                    <!-- Status -->
-                    <a href="#"><i class="fa fa-circle text-success"></i> 用户</a>
-                </div>
-            </div>
-
-            <!-- Sidebar Menu -->
-            <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">目 录</li>
-                <!-- Optionally, you can add icons to the links -->
-                <li><a href="/total"><i class="fa fa-link"></i> <span>主界面</span></a></li>
-                <li><a href="/total2"><i class="fa fa-link"></i> <span>个人查证</span></a></li>
-            </ul>
-            <!-- /.sidebar-menu -->
-        </section>
-        <!-- /.sidebar -->
-    </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1>
-                证书查询
-                <small>输入证书编号及姓名进行查询。</small>
-            </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i>主页</a></li>
-                <li class="active">证书查询</li>
-            </ol>
-        </section>
-
-        <!-- Main content -->
-        <section class="content container-fluid">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">证书查询</h3>
-                        </div>
-                        <form class="form-horizontal" id="query_form" action="/getCert" method="POST">
-                            <div class="box-body">
-                                <div class="form-group">
-                                    <label for="txtype" class="col-sm-3 control-label">证书类别：</label>
-                                    <div class="col-sm-8">
-                                        <select name="txtype" id="txtype" class="btn btn-block btn-default">
-                                            <option value="BYZ" selected="selected">学历证书</option>
-                                            <option value="XWZ">学位证书</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="num" class="col-sm-3 control-label">证书编号：</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="num" name="num"/>
-                                        <span style="display: none; color: red" id="num_msg">请输入正确的证书编号</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="verifyslider" class="col-sm-3 control-label"></label>
-                                    <div class="col-sm-8">
-                                        <div class="container">
-                                            <div id="verifyslider" style="position: relative"></div>
-                                            <div id="msg" class="msg"></div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
+            <!-- Main content -->
+            <section class="content container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">证书查询</h3>
                             </div>
-                        </form>
-                        <!-- /.box-body -->
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="callout callout-info">
-                        <h4>注意：</h4>
-                        <p>1、查询学历证书需经权属人同意。</p>
-                        <p>2、学历证书查询结果不得用于违背权属人意愿之用途</p>
-                        <p>3、学历证书和证明书由各高校自行印制，证书编号通常为18位。不知道证书编号的，可咨询发证学校。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
+                            <form class="form-horizontal" id="query_form" action="/getCert" method="POST">
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <label for="txtype" class="col-sm-3 control-label">证书类别：</label>
+                                        <div class="col-sm-8">
+                                            <select name="txtype" id="txtype" class="btn btn-block btn-default">
+                                                <option value="BYZ" selected="selected">学历证书</option>
+                                                <option value="XWZ">学位证书</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="num" class="col-sm-3 control-label">证书编号：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="num" name="num" />
+                                            <span style="display: none; color: red" id="num_msg">请输入正确的证书编号</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="verifyslider" class="col-sm-3 control-label"></label>
+                                        <div class="col-sm-8">
+                                            <div class="container">
+                                                <div id="verifyslider" style="position: relative"></div>
+                                                <div id="msg" class="msg"></div>
+                                            </div>
 
-    <!-- Main Footer -->
-    <footer class="main-footer">
-        <!-- To the right -->
-        <div class="pull-right hidden-xs">
-            Anything you want
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="callout callout-info">
+                            <h4>注意：</h4>
+                            <p>1、查询学历证书需经权属人同意。</p>
+                            <p>2、学历证书查询结果不得用于违背权属人意愿之用途</p>
+                            <p>3、学历证书和证明书由各高校自行印制，证书编号通常为18位。不知道证书编号的，可咨询发证学校。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- /.content -->
         </div>
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2018 <a href="#">TheRang</a>.</strong> All rights reserved.
-    </footer>
-</div>
-<!-- ./wrapper -->
+        <!-- /.content-wrapper -->
 
-<!-- REQUIRED JS SCRIPTS -->
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <!-- To the right -->
+            <div class="pull-right hidden-xs">
+                Anything you want
+            </div>
+            <!-- Default to the left -->
+            <strong>Copyright &copy; 2018
+                <a href="#">TheRang</a>.</strong> All rights reserved.
+        </footer>
+    </div>
+    <!-- ./wrapper -->
 
-<!-- jQuery 3 -->
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
-<!-- Bootstrap slider -->
-<script src="plugins/bootstrap-slider/bootstrap-slider.js"></script>
-<script src="dist/js/verify.js"></script>
+    <!-- REQUIRED JS SCRIPTS -->
+
+    <!-- jQuery 3 -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
+    <!-- Bootstrap slider -->
+    <script src="plugins/bootstrap-slider/bootstrap-slider.js"></script>
+    <script src="dist/js/verify.js"></script>
 
 
-<script>
+    <script>
+        var form = document.getElementById('query_form');
 
-
-    var flag = false;
-    var form = document.getElementById('query_form');
-    $('#num').blur(function(){
-        var num = $('#num').val();
-        var txtype = $('#txtype').val();
-        console.log(num.length);
-        console.log(txtype);
-        if((num.length != 18 && txtype == "BYZ") || (num.length != 16 && txtype == "XWZ")){
-            $('#num_msg').show();
-            flag = false;
-            // from.attr("disabled",true);
-        }else{
-            $('#num_msg').hide();
-            flag = true;
-            // from.attr("disabled",false);
+        $('#num').blur(function () {
+            var num = $('#num').val();
+            var txtype = $('#txtype').val();
+            console.log(num.length);
+            console.log(txtype);
+            if ((num.length != 18 && txtype == "BYZ") || (num.length != 16 && txtype == "XWZ")) {
+                $('#num_msg').show();
+                // from.attr("disabled",true);
+            } else {
+                $('#num_msg').hide();
+                // from.attr("disabled",false);
+            }
+        });
+        var cleanMsg = function () {
+            document.getElementById('msg').innerHTML = '';
         }
-    });
+        VerifySlider.init({
+            el: document.getElementById('verifyslider'),
+            onSuccess: function () {
+                document.getElementById('msg').innerHTML = '验证成功！';
+                $('#msg').css("color", "green");
+                var num = $('#num').val();
+                var txtype = $('#txtype').val();
+                if ((num.length != 18 && txtype == "BYZ") || (num.length != 16 && txtype == "XWZ")) {
 
-    var cleanMsg = function() {
-        document.getElementById('msg').innerHTML = '';
-    }
-    VerifySlider.init({
-        el: document.getElementById('verifyslider'),
-        onSuccess: function() {
-            document.getElementById('msg').innerHTML = '验证成功！';
-            $('#msg').css("color","green");
-            form.submit();
-        },
-        onFail: function() {
-            document.getElementById('msg').innerHTML = '验证失败，请重试！';
-            $('#msg').css("color","red");
+                    $('#num_msg').show();
+                // from.attr("disabled",true);
+                } else {
+                    $('#num_msg').hide();
+                    form.submit();
+                }
+            },
+            onFail: function () {
+                document.getElementById('msg').innerHTML = '验证失败，请重试！';
+                $('#msg').css("color", "red");
 
-        },
-        onRefresh: cleanMsg
-    })
-
-</script>
+            },
+            onRefresh: cleanMsg
+        })
+    </script>
 </body>
+
+</html>
+
+
+
 </html>
